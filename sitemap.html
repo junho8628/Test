@@ -82,113 +82,6 @@
 				transition: all .3s ease-out;
 			}
 
-			/* -------------------------------------- */
-
-			.rectangle-list a{
-				position: relative;
-				display: block;
-				padding: .4em .4em .4em .8em;
-				*padding: .4em;
-				margin: .5em 0 .5em 2.5em;
-				background: #ddd;
-				color: #444;
-				text-decoration: none;
-				-webkit-transition: all .3s ease-out;
-				-moz-transition: all .3s ease-out;
-				-ms-transition: all .3s ease-out;
-				-o-transition: all .3s ease-out;
-				transition: all .3s ease-out;	
-			}
-
-			.rectangle-list a:hover{
-				background: #eee;
-			}	
-
-			.rectangle-list a:before{
-				content: counter(li);
-				counter-increment: li;
-				position: absolute;	
-				left: -2.5em;
-				top: 50%;
-				margin-top: -1em;
-				background: #fa8072;
-				height: 2em;
-				width: 2em;
-				line-height: 2em;
-				text-align: center;
-				font-weight: bold;
-			}
-			
-			.rectangle-list a:after{
-				position: absolute;	
-				content: '';
-				border: .5em solid transparent;
-				left: -1em;
-				top: 50%;
-				margin-top: -.5em;
-				-webkit-transition: all .3s ease-out;
-				-moz-transition: all .3s ease-out;
-				-ms-transition: all .3s ease-out;
-				-o-transition: all .3s ease-out;
-				transition: all .3s ease-out;				
-			}
-
-			.rectangle-list a:hover:after{
-				left: -.5em;
-				border-left-color: #fa8072;				
-			}
-
-			/* -------------------------------------- */
-
-			.circle-list li{
-			    padding: 2.5em;
-			    border-bottom: 1px dashed #ccc;
-			}
-
-			.circle-list h2{
-			    position: relative;
-			    margin: 0;
-			}
-
-			.circle-list p{
-			    margin: 0;
-			}
-
-			.circle-list h2:before{
-			    content: counter(li);
-			    counter-increment: li;
-			    position: absolute;    
-			    z-index: -1;
-			    left: -1.3em;
-			    top: -.8em;
-			    background: #f5f5f5;
-			    height: 1.5em;
-			    width: 1.5em;
-			    border: .1em solid rgba(0,0,0,.05);
-			    text-align: center;
-			    font: italic bold 1em/1.5em Georgia, Serif;
-			    color: #ccc;
-			    -moz-border-radius: 1.5em;
-			    -webkit-border-radius: 1.5em;
-			    border-radius: 1.5em;
-			    -webkit-transition: all .2s ease-out;
-			    -moz-transition: all .2s ease-out;
-			    -ms-transition: all .2s ease-out;
-			    -o-transition: all .2s ease-out;
-			    transition: all .2s ease-out;    
-			}
-
-			.circle-list li:hover h2:before{
-			    background-color: #ffd797;
-			    border-color: rgba(0,0,0,.08);
-			    border-width: .2em;
-			    color: #444;
-			    -webkit-transform: scale(1.5);
-			    -moz-transform: scale(1.5);
-			    -ms-transform: scale(1.5);
-			    -o-transform: scale(1.5);
-			    transform: scale(1.5);
-			}
 			h1{
 				color: #87ceeb;
 				font-weight: bold;
@@ -323,40 +216,211 @@
             </li>
             <li><a href="">자료실</a>
                 <ol>
-					<li><a href="">게시판메인</a></li>
-					<li><a href="">기본게시판</a></li>
-                    <li><a href="">내가 작성한 게시글</a></li>
-                    <li><a href="">안 읽은 게시글</a></li>
-					<li><a href="">내가 리플달은 게시글</a></li>
-					<li><a href="">환경설정</a></li>
+					<li><a href="">게시판메인</a>
+						<ol>
+							<li><a href="">모바일 앱에서 게시판 사용방법 안내</a></li>
+						</ol>
+					</li>
+					<li><a href="">기본게시판</a>
+						<ol>
+							<li><a href="">모바일 앱에서 게시판 사용방법 안내</a></li>
+						</ol>
+					</li>
+					<li><a href="">내가 작성한 게시글</a>
+						<ol>
+							<li><a href="">검색하기</a></li>
+							<li><a href="">이관DB함 자료보기</a></li>
+						</ol>
+					</li>
+					<li><a href="">안 읽은 게시글</a>
+						<ol>
+							<li><a href="">검색하기</a></li>
+							<li><a href="">이관DB함 자료보기</a></li>
+						</ol>
+					</li>
+					<li><a href="">내가 리플달은 게시글</a>
+						<ol>
+							<li><a href="">검색하기</a></li>
+							<li><a href="">이관DB함 자료보기</a></li>
+						</ol>
+					</li>
+					<li><a href="">환경설정</a>
+						<ol>
+							<li><a href="">개인방 허가여부</a></li>
+							<li><a href="">좌측메뉴 형식</a></li>
+							<li><a href="">좌측메뉴 폰트크기</a></li>
+						</ol>
+					</li>
 				</ol>
             </li>
-			<li><a href="">홈페이지</a></li>
+			<li><a href="">홈페이지</a>
+				<ol>
+					<li><a href="">게시판메인</a>
+						<ol>
+							<li><a href="">모바일 앱에서 게시판 사용방법 안내</a></li>
+						</ol>
+					</li>
+					<li><a href="">기본게시판</a>
+						<ol>
+							<li><a href="">모바일 앱에서 게시판 사용방법 안내</a></li>
+						</ol>
+					</li>
+					<li><a href="">내가 작성한 게시글</a>
+						<ol>
+							<li><a href="">검색하기</a></li>
+							<li><a href="">이관DB함 자료보기</a></li>
+						</ol>
+					</li>
+					<li><a href="">안 읽은 게시글</a>
+						<ol>
+							<li><a href="">검색하기</a></li>
+							<li><a href="">이관DB함 자료보기</a></li>
+						</ol>
+					</li>
+					<li><a href="">내가 리플달은 게시글</a>
+						<ol>
+							<li><a href="">검색하기</a></li>
+							<li><a href="">이관DB함 자료보기</a></li>
+						</ol>
+					</li>
+					<li><a href="">환경설정</a>
+						<ol>
+							<li><a href="">개인방 허가여부</a></li>
+							<li><a href="">좌측메뉴 형식</a></li>
+							<li><a href="">좌측메뉴 폰트크기</a></li>
+						</ol>
+					</li>
+				</ol>
+			</li>
             <li><a href="">고객지원</a>
                 <ol>
-					<li><a href="">게시판메인</a></li>
-					<li><a href="">기본게시판</a></li>
-                    <li><a href="">내가 작성한 게시글</a></li>
-                    <li><a href="">안 읽은 게시글</a></li>
-					<li><a href="">내가 리플달은 게시글</a></li>
-					<li><a href="">환경설정</a></li>
+					<li><a href="">게시판메인</a>
+						<ol>
+							<li><a href="">모바일 앱에서 게시판 사용방법 안내</a></li>
+						</ol>
+					</li>
+					<li><a href="">기본게시판</a>
+						<ol>
+							<li><a href="">모바일 앱에서 게시판 사용방법 안내</a></li>
+						</ol>
+					</li>
+					<li><a href="">내가 작성한 게시글</a>
+						<ol>
+							<li><a href="">검색하기</a></li>
+							<li><a href="">이관DB함 자료보기</a></li>
+						</ol>
+					</li>
+					<li><a href="">안 읽은 게시글</a>
+						<ol>
+							<li><a href="">검색하기</a></li>
+							<li><a href="">이관DB함 자료보기</a></li>
+						</ol>
+					</li>
+					<li><a href="">내가 리플달은 게시글</a>
+						<ol>
+							<li><a href="">검색하기</a></li>
+							<li><a href="">이관DB함 자료보기</a></li>
+						</ol>
+					</li>
+					<li><a href="">환경설정</a>
+						<ol>
+							<li><a href="">개인방 허가여부</a></li>
+							<li><a href="">좌측메뉴 형식</a></li>
+							<li><a href="">좌측메뉴 폰트크기</a></li>
+						</ol>
+					</li>
 				</ol>
             </li>
-            <li><a href="">경영관리</a></li>
+			<li><a href="">경영관리</a>
+				<ol>
+					<li><a href="">게시판메인</a>
+						<ol>
+							<li><a href="">모바일 앱에서 게시판 사용방법 안내</a></li>
+						</ol>
+					</li>
+					<li><a href="">기본게시판</a>
+						<ol>
+							<li><a href="">모바일 앱에서 게시판 사용방법 안내</a></li>
+						</ol>
+					</li>
+					<li><a href="">내가 작성한 게시글</a>
+						<ol>
+							<li><a href="">검색하기</a></li>
+							<li><a href="">이관DB함 자료보기</a></li>
+						</ol>
+					</li>
+					<li><a href="">안 읽은 게시글</a>
+						<ol>
+							<li><a href="">검색하기</a></li>
+							<li><a href="">이관DB함 자료보기</a></li>
+						</ol>
+					</li>
+					<li><a href="">내가 리플달은 게시글</a>
+						<ol>
+							<li><a href="">검색하기</a></li>
+							<li><a href="">이관DB함 자료보기</a></li>
+						</ol>
+					</li>
+					<li><a href="">환경설정</a>
+						<ol>
+							<li><a href="">개인방 허가여부</a></li>
+							<li><a href="">좌측메뉴 형식</a></li>
+							<li><a href="">좌측메뉴 폰트크기</a></li>
+						</ol>
+					</li>
+				</ol>
+			</li>
             <li><a href="">#R&D</a>
                 <ol>
-					<li><a href="">게시판메인</a></li>
-					<li><a href="">기본게시판</a></li>
-                    <li><a href="">내가 작성한 게시글</a></li>
-                    <li><a href="">안 읽은 게시글</a></li>
-					<li><a href="">내가 리플달은 게시글</a></li>
-					<li><a href="">환경설정</a></li>
+					<li><a href="">게시판메인</a>
+						<ol>
+							<li><a href="">모바일 앱에서 게시판 사용방법 안내</a></li>
+						</ol>
+					</li>
+					<li><a href="">기본게시판</a>
+						<ol>
+							<li><a href="">모바일 앱에서 게시판 사용방법 안내</a></li>
+						</ol>
+					</li>
+					<li><a href="">내가 작성한 게시글</a>
+						<ol>
+							<li><a href="">검색하기</a></li>
+							<li><a href="">이관DB함 자료보기</a></li>
+						</ol>
+					</li>
+					<li><a href="">안 읽은 게시글</a>
+						<ol>
+							<li><a href="">검색하기</a></li>
+							<li><a href="">이관DB함 자료보기</a></li>
+						</ol>
+					</li>
+					<li><a href="">내가 리플달은 게시글</a>
+						<ol>
+							<li><a href="">검색하기</a></li>
+							<li><a href="">이관DB함 자료보기</a></li>
+						</ol>
+					</li>
+					<li><a href="">환경설정</a>
+						<ol>
+							<li><a href="">개인방 허가여부</a></li>
+							<li><a href="">좌측메뉴 형식</a></li>
+							<li><a href="">좌측메뉴 폰트크기</a></li>
+						</ol>
+					</li>
 				</ol>
             </li>
             <li><a href="">파일관리</a>
                 <ol>
-                    <li><a href="">Z드라이브</a></li>
-                    <li><a href="">이미지 디스크</a></li>
+					<li><a href="">Z드라이브</a>
+						<ol>
+							<li><a href="">닥스클라우드로 이전</a></li>
+						</ol>
+					</li>
+					<li><a href="">이미지 디스크</a>
+						<ol>
+							<li><a href="">닥스클라우드로 이전</a></li>
+						</ol>
+					</li>
                 </ol>
             </li>
             <li><a href="">Office365</a>
