@@ -84,21 +84,22 @@
 				-o-transition: all .3s ease-out;
 				transition: all .3s ease-out;
 			}
+			
 			h1{
 				color: #87ceeb;
 				font-weight: bold;
 			}
 			.submenu{
 				display:none;
+				position:relative;
+				width:95%;
+				height:100%;
 				z-index: 1;
 			}
 			.submenu2{
 				display:none;
-				float:right;
 				position:relative;
-				top:-45px;
-				left:63%;
-				width:60%;
+				width:95%;
 				height:100%;
 				z-index: 1;
 			}
@@ -123,17 +124,19 @@
 		<script src="js/jquery-3.5.1.min.js"></script>
 		<script>
 			$(function(){
-				$('.rounded-list>li').mouseover(function(){
-					$(this).find('.submenu').stop().show();
-				}).mouseout(function(){
-					$(this).find('.submenu').stop().hide();
-				});
+				
+				$('.rounded-list>li').on("click",function(s){
+					$(this).find('.submenu').toggle();
+					s.preventDefault();
+			});
+				
 
-				$('.submenu>li').mouseover(function(){
-					$(this).find('.submenu2').stop().show();
-				}).mouseout(function(){
-					$(this).find('.submenu2').stop().hide();
+				$('.submenu>li').click(function(h){
+					event.stopPropagation()
+					$(this).find('.submenu2').toggle();
+					h.preventDefault();
 				});
+				
 			});
 
 
