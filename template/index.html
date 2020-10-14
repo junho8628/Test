@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <h1>직원 리스트</h1>
+    {% for row in sitemap %}
+        {{row.id}}, {{row.title}}, {{row.url}}, {{row.depth}}, {{row.sortseq}}, {{row.describe}}
+        <input type="button" value="삭제" onclick="fDel('{{row.id}}')">
+        <input type="button" value="수정" onclick="fEdit('{{row.id}}', '{{row.title}}', '{{row.url}}', '{{row.depth}}', '{{row.sortseq}}', '{{row.describe}}')">
+    {% endfor %}
+
+    <h1>직원추가</h1>
+    <form action="/insert" method="POST">
+        직원명 : <input type="text" name="username"> <br>
+        이메일 : <input type="text" name="email"> <br>
+        전화번호 : <input type="text" name="tel"> <br>
+        직위 : <input type="text" name="jicwi"> <br>
+        <input type="submit" value="저장">
+    </form>
+
+    <h1>직원수정</h1>
+    <form name="frmEdit" action="/update" method="POST">
+        직원아이디 : <input type="text" name="userid" readonly> <br>
+        직원명 : <input type="text" name="username"> <br>
+        이메일 : <input type="text" name="email"> <br>
+        전화번호 : <input type="text" name="tel"> <br>
+        직위 : <input type="text" name="jicwi"> <br>
+        <input type="submit" value="수정">
+    </form>
+
+    <script>
+        function fDel(uid) {
+            if (confirm(uid+"정말로 삭제하시겠습니까?")==false) return;
+            location.href="/delete/"+uid;
+        }
+
+        function fEdit(userid,username,email,tel,jicwi){
+            var frm = document.frmEdit;
+                frm.userid.value = userid;
+                frm.username.value = username;
+                frm.email.value = email;
+                frm.tel.value = tel;
+                frm.jicwi.value = jicwi;
+        }
+
+        function fSound(){
+            location.href = "/playmp3";
+        }
+    </script>
+</body>
+</html>
