@@ -1,3 +1,4 @@
+{% extends 'bash.html' %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,22 +15,24 @@
         <input type="button" value="수정" onclick="fEdit('{{row.id}}', '{{row.title}}', '{{row.url}}', '{{row.depth}}', '{{row.sortseq}}', '{{row.describe}}')">
     {% endfor %}
 
-    <h1>직원추가</h1>
+    <h1>add title</h1>
     <form action="/insert" method="POST">
-        직원명 : <input type="text" name="username"> <br>
-        이메일 : <input type="text" name="email"> <br>
-        전화번호 : <input type="text" name="tel"> <br>
-        직위 : <input type="text" name="jicwi"> <br>
+        title : <input type="text" name="title"> <br>
+        url : <input type="text" name="url"> <br>
+        depth : <input type="text" name="depth"> <br>
+        sortseq : <input type="text" name="sortseq"> <br>
+        describe : <input type="text" name="describe"> <br>
         <input type="submit" value="저장">
     </form>
 
-    <h1>직원수정</h1>
+    <h1>update title</h1>
     <form name="frmEdit" action="/update" method="POST">
-        직원아이디 : <input type="text" name="userid" readonly> <br>
-        직원명 : <input type="text" name="username"> <br>
-        이메일 : <input type="text" name="email"> <br>
-        전화번호 : <input type="text" name="tel"> <br>
-        직위 : <input type="text" name="jicwi"> <br>
+        id : <input type="text" name="id" readonly> <br>
+        title : <input type="text" name="title"> <br>
+        url : <input type="text" name="url"> <br>
+        depth : <input type="text" name="depth"> <br>
+        sortseq : <input type="text" name="sortseq"> <br>
+        describe : <input type="text" name="describe"> <br>
         <input type="submit" value="수정">
     </form>
 
@@ -39,17 +42,14 @@
             location.href="/delete/"+uid;
         }
 
-        function fEdit(userid,username,email,tel,jicwi){
+        function fEdit(id,title,url,depth,sortseq,describe){
             var frm = document.frmEdit;
-                frm.userid.value = userid;
-                frm.username.value = username;
-                frm.email.value = email;
-                frm.tel.value = tel;
-                frm.jicwi.value = jicwi;
-        }
-
-        function fSound(){
-            location.href = "/playmp3";
+                frm.userid.value = id;
+                frm.title.value = title;
+                frm.url.value = url;
+                frm.depth.value = depth;
+                frm.sortseq.value = sortseq;
+                frm.describe.value = describe;
         }
     </script>
 </body>
