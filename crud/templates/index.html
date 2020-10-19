@@ -9,9 +9,9 @@
 
     <h1>SiteMap</h1>
     {% for row in sitemap %}
-        {{row.id}}, {{row.title}}, {{row.url}}, {{row.depth}}, {{row.sortseq}}, {{row.describe}}
+        {{row.id}}, {{row.title}} , {{row.url}} , {{row.depth}} , {{row.pid}} , {{row.sortseq}} , {{row.describe}}
         <input type="button" value="삭제" onclick="fDel('{{row.id}}')">
-        <input type="button" value="수정" onclick="fEdit('{{row.id}}', '{{row.title}}', '{{row.url}}', '{{row.depth}}', '{{row.sortseq}}', '{{row.describe}}')">
+        <input type="button" value="수정" onclick="fEdit('{{row.id}}', '{{row.title}}', '{{row.url}}', '{{row.depth}}', '{{row.pid}}','{{row.sortseq}}', '{{row.describe}}')">
     {% endfor %}
 
     <h1>add title</h1>
@@ -19,6 +19,7 @@
         title : <input type="text" name="title"> <br>
         url : <input type="text" name="url"> <br>
         depth : <input type="text" name="depth"> <br>
+        pid: <input type="text" name="pid"> <br>
         sortseq : <input type="text" name="sortseq"> <br>
         describe : <input type="text" name="describe"> <br>
         <input type="submit" value="저장">
@@ -26,10 +27,11 @@
 
     <h1>update title</h1>
     <form name="frmEdit" action="/update" method="POST">
-        id : <input type="text" name="id" readonly> <br>
+        id : <input type="text" name="id"> <br>
         title : <input type="text" name="title"> <br>
         url : <input type="text" name="url"> <br>
         depth : <input type="text" name="depth"> <br>
+        pid: <input type="text" name="pid"> <br>
         sortseq : <input type="text" name="sortseq"> <br>
         describe : <input type="text" name="describe"> <br>
         <input type="submit" value="수정">

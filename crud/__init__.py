@@ -10,7 +10,7 @@ app.secret_key = "Secret Key"
 db = SQLAlchemy(app)
 
 class sitemap(db.Model):
-    id = db.Column(db.Integer,primary_key = True)
+    id = db.Column(db.Integer,primary_key = True,autoincrement=True)
     title = db.Column(db.String(255), nullable = False)
     url = db.Column(db.String(255), unique = True, nullable = True)
     depth = db.Column(db.Integer, nullable = False)
@@ -65,8 +65,8 @@ def update():
 
 @app.route('/delete/<id>', methods=['GET','POST'])
 def delete(id):
-    deletesitemap = sitemap.query.get(id)
-    db.session.delete(deletesitemap)
+    deleteUser = sitemap.query.get(id)
+    db.session.delete(deleteUser)
     db.session.commit()
     flash(u"직원이 성공적으로 삭제되었습니다.","success")
     return redirect(url_for('index'))
