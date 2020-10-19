@@ -3,18 +3,17 @@ from flask import Flask, render_template, request,redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
-
+app.secret_key = "Secret Key"
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///sitemap.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-app.secret_key = "Secret Key"
 db = SQLAlchemy(app)
 
 class sitemap(db.Model):
-    id = db.Column(db.Integer,primary_key = True)
-    title = db.Column(db.String(255),  nullable = False)
+    id = db.Column(db.Integer,primary_key = True,autoincrement=True)
+    title = db.Column(db.String(255), nullable = False)
     url = db.Column(db.String(255), unique = True, nullable = True)
     depth = db.Column(db.Integer, nullable = False)
-    pid= db.Column(db.Integer, nullable = False)
+    pid = db.Column(db.Integer, nullable = False)
     sortseq = db.Column(db.Integer, unique = True, nullable = False)
     describe = db.Column(db.String(255), unique = True, nullable = True)
 
