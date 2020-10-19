@@ -14,13 +14,15 @@ class sitemap(db.Model):
     title = db.Column(db.String(255),  nullable = False)
     url = db.Column(db.String(255), unique = True, nullable = True)
     depth = db.Column(db.Integer, nullable = False)
+    pid= db.Column(db.Integer, nullable = False)
     sortseq = db.Column(db.Integer, unique = True, nullable = False)
     describe = db.Column(db.String(255), unique = True, nullable = True)
 
-    def __init__(self, title,url,depth,sortseq,describe):
+    def __init__(self, title,url,depth,pid,sortseq,describe):
         self.title = title
         self.url = url
         self.depth = depth
+        self.pid = pid
         self.sortseq = sortseq
         self.describe = describe
 
@@ -35,10 +37,11 @@ def insertUser():
         title = request.form['title']
         url = request.form['url']
         depth = request.form['depth']
+        pid = request.form['pid']
         sortseq = request.form['sortseq']
         describe = request.form['describe']
         
-        inputUser = sitemap(title,url,depth,sortseq,describe) 
+        inputUser = sitemap(title,url,depth,pid,sortseq,describe) 
         db.session.add(inputUser)
         db.session.commit()
 
@@ -53,6 +56,7 @@ def update():
         inputUser.title = request.form['title']
         inputUser.url = request.form['url']
         inputUser.depth = request.form['depth']
+        inputUser.pid = request.form['pid']
         inputUser.sortseq = request.form['sortseq']
         inputUser.describe = request.form['describe']
 
