@@ -7,7 +7,7 @@
 </head>
 <body>
 
-    <h1>직원 리스트</h1>
+    <h1>SiteMap</h1>
     {% for row in sitemap %}
         {{row.id}}, {{row.title}} , {{row.url}} , {{row.depth}} , {{row.pid}} , {{row.sortseq}} , {{row.describe}}
         <input type="button" value="삭제" onclick="fDel('{{row.id}}')">
