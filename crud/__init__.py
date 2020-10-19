@@ -6,14 +6,14 @@ app = Flask(__name__)
 
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///sitemap.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-
+app.secret_key = "Secret Key"
 db = SQLAlchemy(app)
 
-class User(db.Model):
+class sitemap(db.Model):
     id = db.Column(db.Integer,primary_key = True)
-    title = db.Column(db.String(255), unique = True, nullable = False)
+    title = db.Column(db.String(255),  nullable = False)
     url = db.Column(db.String(255), unique = True, nullable = True)
-    depth = db.Column(db.Integer, unique = True, nullable = False)
+    depth = db.Column(db.Integer, nullable = False)
     sortseq = db.Column(db.Integer, unique = True, nullable = False)
     describe = db.Column(db.String(255), unique = True, nullable = True)
 
@@ -26,7 +26,7 @@ class User(db.Model):
 
 @app.route("/")
 def index():
-    all_data = User.query.order_by(User.id.desc()).all() # selelct * from sitmemap
+    all_data = sitemap.query.order_by(sitemap.id.desc()).all() # selelct * from sitmemap
     return render_template("index.html",sitemap = all_data)
 
 @app.route("/insert",methods=['POST'])
@@ -38,7 +38,7 @@ def insertUser():
         sortseq = request.form['sortseq']
         describe = request.form['describe']
         
-        inputUser = User(title,url,depth,sortseq,describe) 
+        inputUser = sitemap(title,url,depth,sortseq,describe) 
         db.session.add(inputUser)
         db.session.commit()
 
@@ -49,7 +49,7 @@ def insertUser():
 @app.route('/update', methods=['GET','POST'])
 def update():
     if request.method == 'POST':
-        inputUser = User.query.get(request.form.get('id'))
+        inputUser = sitemap.query.get(request.form.get('id'))
         inputUser.title = request.form['title']
         inputUser.url = request.form['url']
         inputUser.depth = request.form['depth']
@@ -65,7 +65,7 @@ def update():
 
 @app.route('/delete/<id>', methods=['GET','POST'])
 def delete(id):
-    deleteUser = User.query.get(id)
+    deleteUser = sitemap.query.get(id)
     db.session.delete(deleteUser)
     db.session.commit()
     flash(u"직원이 성공적으로 삭제되었습니다.","success")
