@@ -43,12 +43,13 @@
             location.href="/delete/"+uid;
         }
 
-        function fEdit(id,title,url,depth,sortseq,describe){
+        function fEdit(id,title,url,depth,pid,sortseq,describe){
             var frm = document.frmEdit;
                 frm.userid.value = id;
                 frm.title.value = title;
                 frm.url.value = url;
                 frm.depth.value = depth;
+                frm.pid.value = pid;
                 frm.sortseq.value = sortseq;
                 frm.describe.value = describe;
         }
