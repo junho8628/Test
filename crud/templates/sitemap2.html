@@ -1,0 +1,161 @@
+<!doctype html>
+<html>
+	<head>
+		<title>CSS3 ordered list styles - demo</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<style>
+			body{
+				margin: 40px auto;
+				width: 650px;
+				background-image: url("img/zio.png");
+				background-repeat: no-repeat;
+				/*background-size: cover;*/
+			}
+
+			/* -------------------------------------- */
+
+			ol{
+				counter-reset: li;
+				list-style: none;
+				*list-style: decimal;
+				font: 15px 'trebuchet MS', 'lucida sans';
+				padding: 0;
+				margin-bottom: 4em;
+				text-shadow: 0 1px 0 rgba(255,255,255,.5);
+			}
+
+			ol ol{
+				margin: 0 0 0 2em;		
+			}
+			
+			/* -------------------------------------- */		
+			.rounded-list a{
+				position: relative;
+				display: block;
+				padding: .4em .4em .4em 2em;
+				*padding: .4em;
+				margin: .5em 0;
+				background: #ddd;
+				color: #444;
+				text-decoration: none;
+				-moz-border-radius: .3em;
+				-webkit-border-radius: .3em;
+				border-radius: .3em;
+				-webkit-transition: all .3s ease-out;
+				-moz-transition: all .3s ease-out;
+				-ms-transition: all .3s ease-out;
+				-o-transition: all .3s ease-out;
+				transition: all .3s ease-out;	
+			}
+
+			.rounded-list a:hover{
+				background: #eee;
+			}
+
+			.rounded-list a:hover:before{
+				-moz-transform: rotate(360deg);
+			  	-webkit-transform: rotate(360deg);
+			    -moz-transform: rotate(360deg);
+			    -ms-transform: rotate(360deg);
+			    -o-transform: rotate(360deg);
+			    transform: rotate(360deg);	
+			}
+
+			.rounded-list a:before{
+				content: counter(li);
+				counter-increment: li;
+				position: absolute;	
+				left: -1.3em;
+				top: 50%;
+				margin-top: -1.3em;
+				background: #87ceeb;
+				height: 2em;
+				width: 2em;
+				line-height: 2em;
+				border: .3em solid #fff;
+				text-align: center;
+				font-weight: bold;
+				-moz-border-radius: 2em;
+				-webkit-border-radius: 2em;
+				border-radius: 2em;
+				-webkit-transition: all .3s ease-out;
+				-moz-transition: all .3s ease-out;
+				-ms-transition: all .3s ease-out;
+				-o-transition: all .3s ease-out;
+				transition: all .3s ease-out;
+			}
+			
+			h1{
+				color: #87ceeb;
+				font-weight: bold;
+			}
+			.submenu{
+				display:none;
+				position:relative;
+				width:95%;
+				height:100%;
+				z-index: 1;
+			}
+			.submenu2{
+				display:none;
+				position:relative;
+				width:95%;
+				height:100%;
+				z-index: 1;
+			}
+			.submenu2>li{
+				display:block;
+			}
+			span{
+				color:black;
+			}
+			@media screen and (max-width: 768px){
+				body{
+					background-image: none;
+				}
+				.rounded-list{
+					float: none;
+					width: auto;
+				}
+
+			}
+		</style>
+
+		<script src="js/jquery-3.5.1.min.js"></script>
+		<script>
+			$(function(){
+				
+				$('.rounded-list>li').on("click",function(s){
+					$(this).find('.submenu').toggle();
+					s.preventDefault();
+			});
+				
+
+				$('.submenu>li').click(function(h){
+					event.stopPropagation()
+					$(this).find('.submenu2').toggle();
+					h.preventDefault();
+				});
+				
+			});
+
+
+		</script>
+
+	</head>
+	<body>
+		<h1 id="title">Zio<span>You</span> SiteMap</h1>
+		
+		<ol class="rounded-list">
+            <li>
+                <ol class="submenu">
+                    <li>
+                        <ol class="submenu2">
+                            <li></li>
+                        </ol>
+                    </li>
+                </ol>
+            </li>
+        </ol>
+	</body>	
+</html>
