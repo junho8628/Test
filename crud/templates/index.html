@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>zioyousitemap</title>
 </head>
 <body>
 
@@ -14,28 +14,17 @@
         <input type="button" value="수정" onclick="fEdit('{{row.id}}', '{{row.title}}', '{{row.url}}', '{{row.depth}}', '{{row.pid}}','{{row.sortseq}}', '{{row.describe}}')">
         <br>
     {% endfor %}
-
-    <h1>add title</h1>
-    <form action="/insert" method="POST">
+    <h1>title</h1>
+    <form name="frmEdit" action="" method="POST">
+        id : <input type="text" name="id"value="작성x"> <br>
         title : <input type="text" name="title"> <br>
         url : <input type="text" name="url"> <br>
         depth : <input type="text" name="depth"> <br>
         pid: <input type="text" name="pid"> <br>
         sortseq : <input type="text" name="sortseq"> <br>
         describe : <input type="text" name="describe"> <br>
-        <input type="submit" value="저장">
-    </form>
-
-    <h1>update title</h1>
-    <form name="frmEdit" action="/update" method="POST">
-        id : <input type="text" name="id"> <br>
-        title : <input type="text" name="title"> <br>
-        url : <input type="text" name="url"> <br>
-        depth : <input type="text" name="depth"> <br>
-        pid: <input type="text" name="pid"> <br>
-        sortseq : <input type="text" name="sortseq"> <br>
-        describe : <input type="text" name="describe"> <br>
-        <input type="submit" value="수정">
+        <input type="submit" onclick="action='/insert'" value="저장">
+        <input type="submit" onclick="action='/update'" value="수정">
     </form>
 
     <script>
