@@ -7,7 +7,7 @@
 			body{
 				margin: 40px auto;
 				width: 650px;
-				background-image: url("img/zio.png");
+				background-image: url("/crud/static/img/zio.png");
 				background-repeat: no-repeat;
 				/*background-size: cover;*/
 			}
@@ -147,15 +147,9 @@
 		<h1 id="title">Zio<span>You</span> SiteMap</h1>
 		
 		<ol class="rounded-list">
-            <li>
-                <ol class="submenu">
-                    <li>
-                        <ol class="submenu2">
-                            <li></li>
-                        </ol>
-                    </li>
-                </ol>
-            </li>
+			{% for list in sitemap | sort(attribute='id') %}
+			<li><a href="">{{list.title}}</a></li>
+			{% endfor %}
         </ol>
 	</body>	
 </html>

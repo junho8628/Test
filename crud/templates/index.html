@@ -8,10 +8,11 @@
 <body>
 
     <h1>SiteMap</h1>
-    {% for row in sitemap %}
+    {% for row in sitemap | sort(attribute='id')%}
         {{row.id}}, {{row.title}} , {{row.url}} , {{row.depth}} , {{row.pid}} , {{row.sortseq}} , {{row.describe}}
         <input type="button" value="삭제" onclick="fDel('{{row.id}}')">
         <input type="button" value="수정" onclick="fEdit('{{row.id}}', '{{row.title}}', '{{row.url}}', '{{row.depth}}', '{{row.pid}}','{{row.sortseq}}', '{{row.describe}}')">
+        <br>
     {% endfor %}
 
     <h1>add title</h1>
