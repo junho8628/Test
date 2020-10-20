@@ -9,7 +9,7 @@
 
     <h1>SiteMap</h1>
     {% for row in sitemap %}
-        {{row.id}}, {{row.title}} , {{row.url}} , {{row.depth}} , {{row.pid}} , {{row.sortseq}} , {{row.describe}}
+        <br>id : {{row.id}}<br>title : {{row.title}}<br>url : {{row.url}}<br>depth : {{row.depth}}<br>pid : {{row.pid}}<br>sortseq : {{row.sortseq}}<br>describe : {{row.describe}}<br>
         <input type="button" value="삭제" onclick="fDel('{{row.id}}')">
         <input type="button" value="수정" onclick="fEdit('{{row.id}}', '{{row.title}}', '{{row.url}}', '{{row.depth}}', '{{row.pid}}','{{row.sortseq}}', '{{row.describe}}')">
     {% endfor %}
