@@ -28,6 +28,11 @@ class sitemap(db.Model):
 @app.route("/")
 def index():
     all_data = sitemap.query.order_by(sitemap.id.desc()).all() # selelct * from sitmemap
+    return render_template("sitemap2.html",sitemap = all_data)
+
+@app.route("/admin")
+def admin():
+    all_data = sitemap.query.order_by(sitemap.id.desc()).all() # selelct * from sitmemap
     return render_template("index.html",sitemap = all_data)
 
 @app.route("/insert",methods=['POST'])
@@ -44,7 +49,7 @@ def insertUser():
         db.session.add(inputUser)
         db.session.commit()
 
-        flash(u"직원이 성공적으로 등록되었습니다.","success") # 한글은 앞에 u넣기
+        flash(u"db가 성공적으로 등록되었습니다.","success") # 한글은 앞에 u넣기
 
         return redirect(url_for('index'))
         
@@ -61,7 +66,7 @@ def update():
 
         db.session.commit()
 
-        flash(u"직원이 성공적으로 수정되었습니다.","success")
+        flash(u"db가 성공적으로 수정되었습니다.","success")
         flash(u"수고하셨습니다.","success")
 
         return redirect(url_for('index'))
@@ -71,7 +76,7 @@ def delete(id):
     deleteUser = sitemap.query.get(id)
     db.session.delete(deleteUser)
     db.session.commit()
-    flash(u"직원이 성공적으로 삭제되었습니다.","success")
+    flash(u"db가 성공적으로 삭제되었습니다.","success")
     return redirect(url_for('index'))
 
 if __name__ == "__main__":
