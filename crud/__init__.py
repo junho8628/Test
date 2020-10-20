@@ -33,7 +33,7 @@ def index():
 @app.route("/insert",methods=['POST'])
 def insertUser():
     if request.method == 'POST':
-        title = request.form['title']
+        title = request.form[u'title']
         url = request.form['url']
         depth = request.form['depth']
         pid = request.form['pid']
@@ -52,7 +52,7 @@ def insertUser():
 def update():
     if request.method == 'POST':
         inputUser = sitemap.query.get(request.form.get('id'))
-        inputUser.title = request.form['title']
+        inputUser.title = request.form[u'title']
         inputUser.url = request.form['url']
         inputUser.depth = request.form['depth']
         inputUser.pid = request.form['pid']
