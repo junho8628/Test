@@ -1,12 +1,17 @@
 # -*- coding: utf-8 -*-
 from flask import Flask, render_template, request,redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
+import sqlite3
+import json
 
 app = Flask(__name__)
 app.secret_key = "Secret Key"
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///sitemap.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
+
+conn=sqlite3.connect("sitemap.db")
+cur = conn.cursor()
 
 class sitemap(db.Model):
     id = db.Column(db.Integer,primary_key = True,autoincrement=True)
@@ -28,7 +33,23 @@ class sitemap(db.Model):
 @app.route("/")
 def index():
     all_data = sitemap.query.order_by(sitemap.id.desc()).all() # selelct * from sitmemap
+    return render_template("sitemap.html",sitemap = all_data)
+
+@app.route("/admin")
+def admin():
+    all_data = sitemap.query.order_by(sitemap.id.desc()).all() # selelct * from sitmemap
     return render_template("index.html",sitemap = all_data)
+
+# @app.route("/request",methods=['POST'])
+# def query():
+#     value=request.form[sid]
+#     re_sql="select * from sitemap where pid ='"+value+"'"
+#     cur.execute(re_sql)
+#     data_list=cur.fetchall()
+#     jsondata = json.dumps(data_list)
+
+#     return jsondata
+     
 
 @app.route("/insert",methods=['POST'])
 def insertUser():
