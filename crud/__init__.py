@@ -52,6 +52,23 @@ def insertUser():
         flash(u"db가 성공적으로 등록되었습니다.","success") # 한글은 앞에 u넣기
 
         return redirect(url_for('index'))
+
+@app.route('/item_request', methods =['POST'])
+def item_query():
+    value1 = request.form['item_id']
+    item_sql = "select * from sitemap where pid ='"+value1+"'"
+    curs.execute(item_sql)
+    row_headers=[x[0] for x in curs.description]
+    rows=curs.fetchall()            
+    json_data=[]                                        #list
+    for result in rows:
+        json_data.append(dict(zip(row_headers,result)))
+    
+    json_return=json.dumps(json_data[0])   #string #json
+ 
+    return jsonify(json_return)
+ 
+    curs.close()
         
 @app.route('/update', methods=['GET','POST'])
 def update():

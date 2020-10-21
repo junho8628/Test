@@ -139,17 +139,45 @@
 				
 			});
 
+		// function test(){
+        //  var text_data = $('#item_id').val();
+        //  $.ajax({
+        //           type : 'POST',                                 
+        //           url : 'http://127.0.0.1:5000/item_request',
+        //           data : {
+        //                   item_id:text_data                     
+        //           },
+        //          dataType : 'JSON',
+        //          success : function(result){
+        //                  alert("result = "+ result);
+        //                  $('#a').html(result);
+        //          },
+        //         error : function(xtr,status,error){
+        //                 alert(xtr +":"+status+":"+error);
+        //                 }
+        //         });
+        // }
+
 
 		</script>
 
 	</head>
 	<body>
 		<h1 id="title">Zio<span>You</span> SiteMap</h1>
-		
-		<ol class="rounded-list">
-			{% for list in sitemap | sort(attribute='id') %}
-			<li><a href="">{{list.title}}</a></li>
-			{% endfor %}
-        </ol>
+		<form>
+				<ol class="rounded-list">
+						{% for list in sitemap | sort(attribute='id') %}
+						{% if (list.depth) == 1 %}
+						<li><a href="">{{list.title}}</a>
+							<ol class="submenu">
+								{% if (list.depth) == 2 %}
+								<li><a href="">{{list.title}}</a></li>
+								{% endif %}
+							</ol>
+						</li>
+						{% endif %}
+						{% endfor %}
+					</ol>
+		</form>
 	</body>	
 </html>
