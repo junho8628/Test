@@ -7,7 +7,7 @@
 			body{
 				margin: 40px auto;
 				width: 650px;
-				background-image: url("/crud/static/img/zio.png");
+				background-image: url("../static/img/zio.png");
 				background-repeat: no-repeat;
 				/*background-size: cover;*/
 			}
@@ -121,7 +121,7 @@
 			}
 		</style>
 
-		<script src="js/jquery-3.5.1.min.js"></script>
+		<script src="../static/js/jquery-3.5.1.min.js"></script>
 		<script>
 			$(function(){
 				
@@ -136,27 +136,30 @@
 					$(this).find('.submenu2').toggle();
 					h.preventDefault();
 				});
-				
-			});
 
-		// function test(){
-        //  var text_data = $('#item_id').val();
-        //  $.ajax({
-        //           type : 'POST',                                 
-        //           url : 'http://127.0.0.1:5000/item_request',
-        //           data : {
-        //                   item_id:text_data                     
-        //           },
-        //          dataType : 'JSON',
-        //          success : function(result){
-        //                  alert("result = "+ result);
-        //                  $('#a').html(result);
-        //          },
-        //         error : function(xtr,status,error){
-        //                 alert(xtr +":"+status+":"+error);
-        //                 }
-        //         });
-        // }
+				$('.rounded-list>li').on("click",function(){
+
+					$.ajax({
+                        type : 'POST',                                
+                        url : 'http://127.0.0.1:5000/request',
+                        // data : {
+                                               
+                        // },
+                        // dataType : 'JSON',
+                        success : function(result){
+							document.getElementsByClassName('submenu').appendChild(a);
+							var a = document.createElement("li");
+  							var textnode = document.createTextNode(result);
+							a.appendChild(textnode);
+ 							
+                        },
+                        error : function(xtr,status,error){
+                                alert(xtr +":"+status+":"+error);
+                        }
+                });
+
+				});
+			});
 
 
 		</script>
@@ -166,13 +169,11 @@
 		<h1 id="title">Zio<span>You</span> SiteMap</h1>
 		<form>
 				<ol class="rounded-list">
-						{% for list in sitemap | sort(attribute='id') %}
+						{% for list in sitemap | sort(attribute='sortseq') %}
 						{% if (list.depth) == 1 %}
 						<li><a href="">{{list.title}}</a>
 							<ol class="submenu">
-								{% if (list.depth) == 2 %}
-								<li><a href="">{{list.title}}</a></li>
-								{% endif %}
+								
 							</ol>
 						</li>
 						{% endif %}
