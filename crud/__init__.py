@@ -10,8 +10,8 @@ app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///sitemap.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
 
-conn=sqlite3.connect("sitemap.db")
-cur = conn.cursor()
+# conn=sqlite3.connect("sitemap.db")
+# cur = conn.cursor()
 
 class sitemap(db.Model):
     id = db.Column(db.Integer,primary_key = True,autoincrement=True)
@@ -33,23 +33,12 @@ class sitemap(db.Model):
 @app.route("/")
 def index():
     all_data = sitemap.query.order_by(sitemap.id.desc()).all() # selelct * from sitmemap
-    return render_template("sitemap.html",sitemap = all_data)
+    return render_template("sitemap2.html",sitemap = all_data)
 
 @app.route("/admin")
 def admin():
     all_data = sitemap.query.order_by(sitemap.id.desc()).all() # selelct * from sitmemap
     return render_template("index.html",sitemap = all_data)
-
-# @app.route("/request",methods=['POST'])
-# def query():
-#     value=request.form[sid]
-#     re_sql="select * from sitemap where pid ='"+value+"'"
-#     cur.execute(re_sql)
-#     data_list=cur.fetchall()
-#     jsondata = json.dumps(data_list)
-
-#     return jsondata
-     
 
 @app.route("/insert",methods=['POST'])
 def insertUser():
@@ -65,10 +54,31 @@ def insertUser():
         db.session.add(inputUser)
         db.session.commit()
 
-        flash(u"직원이 성공적으로 등록되었습니다.","success") # 한글은 앞에 u넣기
+        flash(u"db가 성공적으로 등록되었습니다.","success") # 한글은 앞에 u넣기
 
         return redirect(url_for('index'))
+
+# @app.route('/request', methods =['POST'])
+# def item_query():
+#     value1 = request.form['id']
+#     item_sql = "select * from sitemap where pid ='"+value1+"'"
+#     cur.execute(item_sql)
+#     row_headers=[x[0] for x in cur.description]
+#     rows=cur.fetchall()            
+#     json_data=[]                                        #list
+#     for result in rows:
+#         json_data.append(dict(zip(row_headers,result)))
+    
+#     json_return=json.dumps(json_data[0])   #string #json
+ 
+#     return jsonify(json_return)
+ 
+#     curs.close()
         
+@app.route('/click',methods=['POST'])
+def click():
+    return "hello"
+
 @app.route('/update', methods=['GET','POST'])
 def update():
     if request.method == 'POST':
@@ -82,7 +92,7 @@ def update():
 
         db.session.commit()
 
-        flash(u"직원이 성공적으로 수정되었습니다.","success")
+        flash(u"db가 성공적으로 수정되었습니다.","success")
         flash(u"수고하셨습니다.","success")
 
         return redirect(url_for('index'))
@@ -92,7 +102,7 @@ def delete(id):
     deleteUser = sitemap.query.get(id)
     db.session.delete(deleteUser)
     db.session.commit()
-    flash(u"직원이 성공적으로 삭제되었습니다.","success")
+    flash(u"db가 성공적으로 삭제되었습니다.","success")
     return redirect(url_for('index'))
 
 if __name__ == "__main__":

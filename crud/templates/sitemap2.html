@@ -7,7 +7,7 @@
 			body{
 				margin: 40px auto;
 				width: 650px;
-				background-image: url("/crud/static/img/zio.png");
+				background-image: url("../static/img/zio.png");
 				background-repeat: no-repeat;
 				/*background-size: cover;*/
 			}
@@ -90,14 +90,14 @@
 				font-weight: bold;
 			}
 			.submenu{
-				display:none;
+				
 				position:relative;
 				width:95%;
 				height:100%;
 				z-index: 1;
 			}
 			.submenu2{
-				display:none;
+				
 				position:relative;
 				width:95%;
 				height:100%;
@@ -105,9 +105,6 @@
 			}
 			.submenu2>li{
 				display:block;
-			}
-			span{
-				color:black;
 			}
 			@media screen and (max-width: 768px){
 				body{
@@ -121,37 +118,40 @@
 			}
 		</style>
 
-		<script src="js/jquery-3.5.1.min.js"></script>
+		<script src="../static/js/jquery-3.5.1.min.js"></script>
 		<script>
-			// $(function(){
+			$(function(){
 				
-			// 	$('.rounded-list>li').on("click",function(){
-			// 		var text_data = $('#item_id').val();
-            //    		$.ajax({
-            //             type : 'POST',                                 
-            //             url : 'http://ip주소:5000/item_request',
-            //             data : {
-            //                     item_id:text_data                      
-            //             },
-            //             dataType : 'JSON',
-            //             success : function(result){
-            //                     alert("result = "+ result);
-            //                     $('#a').html(result);
-            //             },
-            //             error : function(xtr,status,error){
-            //                     alert(xtr +":"+status+":"+error);
-            //             }
-            //     });
-			// });
+				$('.rounded-list>li').on("click",function(s){
+					$.ajax({
+						type:'POST',
+						url:'http://127.0.0.1:5000/click',
+						// data : {
+						// 	id : (list.id)
+						// },
+						// dataType:'JSON',
+						success:function(result){
+							// var test = document.getElementById("one");
+							// test.innerHTML = "<li><a href=''>"+result+"</a></li>";
+							// alert(result);
+							var a = document.createElement('ol');
+							a.className = 'submenu';
+							a.innerHTML = "<li><a href=''>"+result+"</a></li>";
+							document.getElementById('one').appendChild(a);
+							
+						}
+					});
+					s.preventDefault();
+			});
 				
 
-			// 	$('.submenu>li').click(function(h){
-			// 		event.stopPropagation()
-			// 		$(this).find('.submenu2').toggle();
-			// 		h.preventDefault();
-			// 	});
+				// $('.submenu>li').click(function(h){
+				// 	event.stopPropagation();
+				// 	$(this).find('.submenu').toggle();
+				// 	h.preventDefault(); //새로고침 안하게 하기
+				// });
 				
-			// });
+			});
 			
 
 		</script>
@@ -159,14 +159,14 @@
 	</head>
 	<body>
 		<h1 id="title">Zio<span>You</span> SiteMap</h1>
-		
-			<ol class="rounded-list">
-				{% for list in sitemap | sort(attribute='id') %}
-					
-						<li><a href="">{{list.title}}</a></li>
-					
-				{% endfor %}
-			</ol>
-		
-	</body>	
+				<ol class="rounded-list">
+						{% for list in sitemap | sort(attribute='id') %}
+						{% if (list.depth) == 1 %}
+						<li id ="one"><a href="">{{list.title}}</a>
+							
+						</li>
+						{% endif %}
+						{% endfor %}
+					</ol>
+		</body>	
 </html>
