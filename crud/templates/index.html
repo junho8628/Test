@@ -8,6 +8,7 @@
 <body>
 
     <h1>SiteMap</h1>
+    
     {% for row in sitemap | sort(attribute='id')%}
         {{row.id}}, {{row.title}} , {{row.url}} , {{row.depth}} , {{row.pid}} , {{row.sortseq}} , {{row.describe}}
         <input type="button" value="삭제" onclick="fDel('{{row.id}}')">

@@ -1,15 +1,17 @@
 # -*- coding: utf-8 -*-
-from flask import Flask, render_template, request,redirect, url_for, flash
+from flask import Flask, render_template, request,redirect, url_for, flash,jsonify
 from flask_sqlalchemy import SQLAlchemy
 import sqlite3
-conn = sqlite3.connect('sitemap.db')
-curs = conn.cursor()
+import json
 
 app = Flask(__name__)
 app.secret_key = "Secret Key"
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///sitemap.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
+
+conn=sqlite3.connect("sitemap.db")
+cur = conn.cursor()
 
 class sitemap(db.Model):
     id = db.Column(db.Integer,primary_key = True,autoincrement=True)
@@ -56,16 +58,31 @@ def insertUser():
 
         return redirect(url_for('index'))
 
-@app.route('/request', methods =['POST'])
-def query():
-    # value = sitemap.query.get(request.form.get('id'))
-    # sql = "select * from sitemap where pid ='"+value+"'"
-    # curs.execute(sql)
-    # data_list=curs.fetchall()       
-    # data= data_list[0]           
-    # jsondata=json.dumps(data[0])  
+# @app.route('/click', methods =['POST'])
+# def item_query():
+#     value1 = request.form['id']
+#     item_sql = "select * from sitemap where pid ='"+value1+"'"
+#     cur.execute(item_sql)
+#     row_headers=[x[0] for x in cur.description]
+#     rows=cur.fetchall()            
+#     json_data=[]                                        #list
+#     for result in rows:
+#         json_data.append(dict(zip(row_headers,result)))
     
-    return"hello"
+#     json_return=json.dumps(json_data[0])   #string #json
+ 
+#     return jsonify(json_return)
+ 
+#     curs.close()
+        
+@app.route('/click',methods=['POST'])
+def click():
+    test=[{'name':'jun','value':13123},{'name':'park','value':13123}]
+    json_date=json.dumps(test)
+    return jsonify(json_date)
+
+    
+
 @app.route('/update', methods=['GET','POST'])
 def update():
     if request.method == 'POST':

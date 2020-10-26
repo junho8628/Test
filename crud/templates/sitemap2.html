@@ -90,14 +90,14 @@
 				font-weight: bold;
 			}
 			.submenu{
-				display:none;
+				
 				position:relative;
 				width:95%;
 				height:100%;
 				z-index: 1;
 			}
 			.submenu2{
-				display:none;
+				
 				position:relative;
 				width:95%;
 				height:100%;
@@ -105,9 +105,6 @@
 			}
 			.submenu2>li{
 				display:block;
-			}
-			span{
-				color:black;
 			}
 			@media screen and (max-width: 768px){
 				body{
@@ -126,59 +123,52 @@
 			$(function(){
 				
 				$('.rounded-list>li').on("click",function(s){
-					$(this).find('.submenu').toggle();
+					$.ajax({
+						type:'POST',
+						url:'http://127.0.0.1:5000/click',
+						// data : {
+						// 	id : (list.id)
+						// },
+						dataType:'JSON',
+						success:function(result){
+							// var test = document.getElementById("one");
+							// test.innerHTML = "<li><a href=''>"+result+"</a></li>";
+							// alert(result);
+						
+							var a = document.createElement('li');
+							a.innerHTML = "<a href=''>"+result+"</a>";
+							document.getElementById('one').appendChild(a);
+
+							
+							
+						}
+					});
 					s.preventDefault();
 			});
 				
 
-				$('.submenu>li').click(function(h){
-					event.stopPropagation()
-					$(this).find('.submenu2').toggle();
-					h.preventDefault();
-				});
-
-				$('.rounded-list>li').on("click",function(){
-
-					$.ajax({
-                        type : 'POST',                                
-                        url : 'http://127.0.0.1:5000/request',
-                        // data : {
-                                               
-                        // },
-                        // dataType : 'JSON',
-                        success : function(result){
-							document.getElementsByClassName('submenu').appendChild(a);
-							var a = document.createElement("li");
-  							var textnode = document.createTextNode(result);
-							a.appendChild(textnode);
- 							
-                        },
-                        error : function(xtr,status,error){
-                                alert(xtr +":"+status+":"+error);
-                        }
-                });
-
-				});
+				// $('.submenu>li').click(function(h){
+				// 	event.stopPropagation();
+				// 	$(this).find('.submenu').toggle();
+				// 	h.preventDefault(); //새로고침 안하게 하기
+				// });
+				
 			});
-
+			
 
 		</script>
 
 	</head>
 	<body>
 		<h1 id="title">Zio<span>You</span> SiteMap</h1>
-		<form>
 				<ol class="rounded-list">
 						{% for list in sitemap | sort(attribute='sortseq') %}
 						{% if (list.depth) == 1 %}
 						<li><a href="">{{list.title}}</a>
-							<ol class="submenu">
-								
-							</ol>
+							<ol class="submenu" id ="one"></ol>
 						</li>
 						{% endif %}
 						{% endfor %}
 					</ol>
-		</form>
-	</body>	
+		</body>	
 </html>
