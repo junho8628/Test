@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from flask import Flask, render_template, request,redirect, url_for, flash
+from flask import Flask, render_template, request,redirect, url_for, flash,jsonify
 from flask_sqlalchemy import SQLAlchemy
 import sqlite3
 import json
@@ -10,8 +10,8 @@ app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///sitemap.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
 
-# conn=sqlite3.connect("sitemap.db")
-# cur = conn.cursor()
+conn=sqlite3.connect("sitemap.db")
+cur = conn.cursor()
 
 class sitemap(db.Model):
     id = db.Column(db.Integer,primary_key = True,autoincrement=True)
@@ -29,6 +29,8 @@ class sitemap(db.Model):
         self.pid = pid
         self.sortseq = sortseq
         self.describe = describe
+
+    
 
 @app.route("/")
 def index():
@@ -77,7 +79,14 @@ def insertUser():
         
 @app.route('/click',methods=['POST'])
 def click():
-    return "hello"
+    value1 = request.form['id']
+    # sql="SELECT * FROM sitemap WHERE depth = 2"
+    # cur.execute(sql)
+    # list = cur.fetchall()
+    test = [{"name": "Alice", "birth-year": 1986},{"name": "Jake", "birth-year": 1998}]
+    json_data = json.dumps(test)
+    return jsonify(json_data)
+    # return value1
 
 @app.route('/update', methods=['GET','POST'])
 def update():

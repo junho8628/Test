@@ -123,22 +123,21 @@
 			$(function(){
 				
 				$('.rounded-list>li').on("click",function(s){
+					var tval = $(this).val();
 					$.ajax({
 						type:'POST',
 						url:'http://127.0.0.1:5000/click',
-						// data : {
-						// 	id : (list.id)
-						// },
-						// dataType:'JSON',
+						data : 
+							{'id' : tval} ,
+						dataType:'JSON',
 						success:function(result){
-							// var test = document.getElementById("one");
-							// test.innerHTML = "<li><a href=''>"+result+"</a></li>";
 							// alert(result);
-							var a = document.createElement('ol');
-							a.className = 'submenu';
-							a.innerHTML = "<li><a href=''>"+result+"</a></li>";
-							document.getElementById('one').appendChild(a);
-							
+							var obj = $.parseJSON(result);
+							for(var i=0; i<Object.keys(obj).length; i++) {
+								var a = document.createElement('li');
+								a.innerHTML = "<a href=''>"+ JSON.stringify(obj[i].name)+"</a>";
+								document.getElementById('test').appendChild(a);
+							}
 						}
 					});
 					s.preventDefault();
@@ -162,8 +161,8 @@
 				<ol class="rounded-list">
 						{% for list in sitemap | sort(attribute='id') %}
 						{% if (list.depth) == 1 %}
-						<li id ="one"><a href="">{{list.title}}</a>
-							
+						<li value = "{{list.id}}"><a href="">{{list.title}}</a>
+							<ol class = 'submenu' id= 'test'></ol>
 						</li>
 						{% endif %}
 						{% endfor %}
