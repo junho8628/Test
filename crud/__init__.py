@@ -30,6 +30,8 @@ class sitemap(db.Model):
         self.sortseq = sortseq
         self.describe = describe
 
+    
+
 @app.route("/")
 def index():
     all_data = sitemap.query.order_by(sitemap.id.desc()).all() # selelct * from sitmemap
@@ -77,11 +79,14 @@ def insertUser():
         
 @app.route('/click',methods=['POST'])
 def click():
-    test=[{'name':'jun','value':13123},{'name':'park','value':13123}]
-    json_date=json.dumps(test)
-    return jsonify(json_date)
-
-    
+    value1 = request.form['id']
+    # sql="SELECT * FROM sitemap WHERE depth = 2"
+    # cur.execute(sql)
+    # list = cur.fetchall()
+    test = [{"name": "Alice", "birth-year": 1986},{"name": "Jake", "birth-year": 1998}]
+    json_data = json.dumps(test)
+    return jsonify(json_data)
+    # return value1
 
 @app.route('/update', methods=['GET','POST'])
 def update():
