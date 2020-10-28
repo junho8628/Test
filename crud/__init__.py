@@ -45,7 +45,7 @@ class sitemap(db.Model):
 @app.route("/")
 def index():
     all_data = sitemap.query.order_by(sitemap.id.desc()).all() # selelct * from sitmemap
-    return render_template("sitemap2.html",sitemap = all_data)
+    return render_template("index.html",sitemap = all_data)
 
 @app.route("/admin")
 def admin():
@@ -68,13 +68,14 @@ def insertUser():
 
         flash(u"db가 성공적으로 등록되었습니다.","success") # 한글은 앞에 u넣기
 
-        return redirect(url_for('index'))   
+        return redirect(url_for('index'))
+
 @app.route('/click',methods=['GET','POST'])
 def click():
     test=sitemap.query.all()
     a=[] 
     for i in test:
-        a.append(i.title)
+        a.append({i.title})
     return str(a)
         
 

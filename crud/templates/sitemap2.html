@@ -131,13 +131,13 @@
 							{'id' : tval} ,
 						dataType:'JSON',
 						success:function(result){
-							// alter(result)
-							// var obj = $.parseJSON(result);
-							// for(var i=0; i<Object.keys(obj).length; i++) {
-							// 	var a = document.createElement('li');
-							// 	a.innerHTML = "<a href=''>"+ JSON.stringify(obj[i].name)+"</a>";
-							// 	document.getElementById('test').appendChild(a);
-							// }
+							alter(result)
+							var obj = $.parseJSON(result);
+							for(var i=0; i<Object.keys(obj).length; i++) {
+								var a = document.createElement('li');
+								a.innerHTML = "<a href=''>"+ JSON.stringify(obj[i].name)+"</a>";
+								document.getElementById('test').appendChild(a);
+							}
 						}
 					});
 					s.preventDefault();
