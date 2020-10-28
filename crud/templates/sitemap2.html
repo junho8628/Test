@@ -132,10 +132,13 @@
 						dataType:'JSON',
 						success:function(result){
 							// alert(result);
-							var obj = $.parseJSON(result);
-							for(var i=0; i<Object.keys(obj).length; i++) {
+							
+							// alert(json_data);
+
+							var obj = JSON.parse(JSON.stringify(result))
+							for (i=0; i<Object.keys(obj).length; i++) {
 								var a = document.createElement('li');
-								a.innerHTML = "<a href=''>"+ JSON.stringify(obj[i].name)+"</a>";
+								a.innerHTML = "<a href=''>"+ obj[i].title +"</a>";
 								document.getElementById('test').appendChild(a);
 							}
 						}

@@ -1,19 +1,17 @@
 # -*- coding: utf-8 -*-
 from flask import Flask, render_template, request,redirect, url_for, flash,jsonify
 from flask_sqlalchemy import SQLAlchemy
-import sqlite3
 import json
-
+from sqlalchemy_serializer import SerializerMixin
 app = Flask(__name__)
 app.secret_key = "Secret Key"
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///sitemap.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+
+
 db = SQLAlchemy(app)
 
-conn=sqlite3.connect("sitemap.db")
-cur = conn.cursor()
-
-class sitemap(db.Model):
+class sitemap(db.Model,SerializerMixin):
     id = db.Column(db.Integer,primary_key = True,autoincrement=True)
     title = db.Column(db.String(255), nullable = False)
     url = db.Column(db.String(255), unique = True, nullable = True)
@@ -60,33 +58,18 @@ def insertUser():
 
         return redirect(url_for('index'))
 
-# @app.route('/request', methods =['POST'])
-# def item_query():
-#     value1 = request.form['id']
-#     item_sql = "select * from sitemap where pid ='"+value1+"'"
-#     cur.execute(item_sql)
-#     row_headers=[x[0] for x in cur.description]
-#     rows=cur.fetchall()            
-#     json_data=[]                                        #list
-#     for result in rows:
-#         json_data.append(dict(zip(row_headers,result)))
-    
-#     json_return=json.dumps(json_data[0])   #string #json
- 
-#     return jsonify(json_return)
- 
-#     curs.close()
         
-@app.route('/click',methods=['POST'])
+@app.route('/click',methods=['GET','POST'])
 def click():
-    value1 = request.form['id']
-    # sql="SELECT * FROM sitemap WHERE depth = 2"
-    # cur.execute(sql)
-    # list = cur.fetchall()
-    test = [{"name": "Alice", "birth-year": 1986},{"name": "Jake", "birth-year": 1998}]
-    json_data = json.dumps(test)
-    return jsonify(json_data)
-    # return value1
+    value = request.form['id']
+    # value = 1
+    li = db.session.query(sitemap).filter_by(pid=value).all()
+    a=[]
+    for i in li :
+        a.append({'title' : i.title})
+    
+    json_list = json.dumps(a,ensure_ascii=False)
+    return json_list
 
 @app.route('/update', methods=['GET','POST'])
 def update():
