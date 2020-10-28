@@ -56,7 +56,15 @@ def insertUser():
 
         flash(u"db가 성공적으로 등록되었습니다.","success") # 한글은 앞에 u넣기
 
-        return redirect(url_for('index'))
+        return redirect(url_for('index'))   
+@app.route('/click',methods=['GET','POST'])
+def click():
+    test=sitemap.query.all()
+    a=[] 
+    for i in test:
+        a.append(i.title)
+    return str(a)
+        
 
         
 @app.route('/click',methods=['GET','POST'])
