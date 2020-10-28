@@ -1,29 +1,17 @@
 # -*- coding: utf-8 -*-
 from flask import Flask, render_template, request,redirect, url_for, flash,jsonify
 from flask_sqlalchemy import SQLAlchemy
-import sqlite3, numpy
-import pandas as pd
 import json
 from sqlalchemy_serializer import SerializerMixin
-# import os.path
-
-# BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-# db_path = os.path.join(BASE_DIR, "sitemap.db")
-# conn=sqlite3.connect("sitemap.db")# check_same_thread=False
-# cur = conn.cursor()
-
-
-
 app = Flask(__name__)
 app.secret_key = "Secret Key"
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///sitemap.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+
+
 db = SQLAlchemy(app)
 
-
-
-class sitemap(db.Model):
-    __tablename__='sitemap'
+class sitemap(db.Model,SerializerMixin):
     id = db.Column(db.Integer,primary_key = True,autoincrement=True)
     title = db.Column(db.String(255), nullable = False)
     url = db.Column(db.String(255), unique = True, nullable = True)
@@ -45,7 +33,7 @@ class sitemap(db.Model):
 @app.route("/")
 def index():
     all_data = sitemap.query.order_by(sitemap.id.desc()).all() # selelct * from sitmemap
-    return render_template("index.html",sitemap = all_data)
+    return render_template("sitemap2.html",sitemap = all_data)
 
 @app.route("/admin")
 def admin():
@@ -68,19 +56,21 @@ def insertUser():
 
         flash(u"db가 성공적으로 등록되었습니다.","success") # 한글은 앞에 u넣기
 
-        return redirect(url_for('index'))
+        return redirect(url_for('index'))   
 
+        
 @app.route('/click',methods=['GET','POST'])
 def click():
-    test=sitemap.query.all()
-    a=[] 
-    for i in test:
-        a.append({i.title})
-    return str(a)
-        
 
+    value = request.form['id']
+    # value = 1
+    li = db.session.query(sitemap).filter_by(pid=value).all()
+    a=[]
+    for i in li :
+        a.append({'title' : i.title})
     
-    # return jsonify(json.loads(df).to_json())
+    json_list = json.dumps(a,ensure_ascii=False)
+    return json_list
 
 @app.route('/update', methods=['GET','POST'])
 def update():
