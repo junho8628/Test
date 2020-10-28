@@ -1,8 +1,18 @@
 # -*- coding: utf-8 -*-
 from flask import Flask, render_template, request,redirect, url_for, flash,jsonify
 from flask_sqlalchemy import SQLAlchemy
-import sqlite3
+import sqlite3, numpy
+import pandas as pd
 import json
+from sqlalchemy_serializer import SerializerMixin
+# import os.path
+
+# BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+# db_path = os.path.join(BASE_DIR, "sitemap.db")
+# conn=sqlite3.connect("sitemap.db")# check_same_thread=False
+# cur = conn.cursor()
+
+
 
 app = Flask(__name__)
 app.secret_key = "Secret Key"
@@ -10,10 +20,10 @@ app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///sitemap.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
 
-conn=sqlite3.connect("sitemap.db")
-cur = conn.cursor()
+
 
 class sitemap(db.Model):
+    __tablename__='sitemap'
     id = db.Column(db.Integer,primary_key = True,autoincrement=True)
     title = db.Column(db.String(255), nullable = False)
     url = db.Column(db.String(255), unique = True, nullable = True)
@@ -58,35 +68,18 @@ def insertUser():
 
         flash(u"db가 성공적으로 등록되었습니다.","success") # 한글은 앞에 u넣기
 
-        return redirect(url_for('index'))
-
-# @app.route('/click', methods =['POST'])
-# def item_query():
-#     value1 = request.form['id']
-#     item_sql = "select * from sitemap where pid ='"+value1+"'"
-#     cur.execute(item_sql)
-#     row_headers=[x[0] for x in cur.description]
-#     rows=cur.fetchall()            
-#     json_data=[]                                        #list
-#     for result in rows:
-#         json_data.append(dict(zip(row_headers,result)))
-    
-#     json_return=json.dumps(json_data[0])   #string #json
- 
-#     return jsonify(json_return)
- 
-#     curs.close()
-        
-@app.route('/click',methods=['POST'])
+        return redirect(url_for('index'))   
+@app.route('/click',methods=['GET','POST'])
 def click():
-    value1 = request.form['id']
-    # sql="SELECT * FROM sitemap WHERE depth = 2"
-    # cur.execute(sql)
-    # list = cur.fetchall()
-    test = [{"name": "Alice", "birth-year": 1986},{"name": "Jake", "birth-year": 1998}]
-    json_data = json.dumps(test)
-    return jsonify(json_data)
-    # return value1
+    test=sitemap.query.all()
+    a=[] 
+    for i in test:
+        a.append(i.title)
+    return str(a)
+        
+
+    
+    # return jsonify(json.loads(df).to_json())
 
 @app.route('/update', methods=['GET','POST'])
 def update():
