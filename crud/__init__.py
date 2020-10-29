@@ -62,7 +62,7 @@ def insertUser():
 @app.route('/click',methods=['GET','POST'])
 def click():
 
-    value = request.form['id']
+    value = request.form['pid']
     # value = 1
     li = db.session.query(sitemap).filter_by(pid=value).all()
     a=[]

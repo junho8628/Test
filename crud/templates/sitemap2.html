@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 	<head>
-		<title>CSS3 ordered list styles - demo</title>
+		<title>list sitemap</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<style>
 			body{
@@ -106,6 +106,9 @@
 			.submenu2>li{
 				display:block;
 			}
+			span {
+				color:black;
+			}
 			@media screen and (max-width: 768px){
 				body{
 					background-image: none;
@@ -121,59 +124,53 @@
 		<script src="../static/js/jquery-3.5.1.min.js"></script>
 		<script>
 			$(function(){
-				
-				$('.rounded-list>li').on("click",function(s){
-					var tval = $(this).val();
+				// .off('click')
+				$('.rounded-list>li').on('click',function(s){
+					var oneval = $(this).val();
 					$.ajax({
 						type:'POST',
 						url:'http://127.0.0.1:5000/click',
 						data : 
-							{'id' : tval} ,
+							{'pid' : oneval} ,
 						dataType:'JSON',
-						success:function(result){
-							var obj = JSON.parse(JSON.stringify(result))
-							for (i=0; i<Object.keys(obj).length; i++) {
-								var a = document.createElement('li');
-								a.setAttribute('value',obj[i].id)
-								a.setAttribute('id','test'+obj[i].id)
-								a.innerHTML = "<a href=''>"+ obj[i].title +"</a>"+"<ol class='submenu2' id=aaa"+obj[i].id+"></ol>";
-								document.getElementById('test_'+tval).appendChild(a);
-							}
-						}
-					});
-					s.preventDefault();
-			});
-				
-
-				$('.submenu').on('click','li',function(h){
-					
-					var bval=$(this).val();
-
-					$.ajax({
-						type:'POST',
-						url:'http://127.0.0.1:5000/click',
-						data : 
-							{'id' : bval} ,
-						dataType:'JSON',
-						
 						success:function(result){
 							var obj = JSON.parse(JSON.stringify(result))
 							for (i=0; i<Object.keys(obj).length; i++) {
 								var a = document.createElement('li');
 								a.setAttribute('value',obj[i].id);
-								a.innerHTML = "<a href=''>"+ obj[i].title +"</a>";
-								document.getElementById('aaa'+bval).appendChild(a);
+								a.innerHTML = "<a href=''>"+ obj[i].title +"</a>"+"<ol class = 'submenu2' id = "+obj[i].id+"> </ol>";
+								document.getElementById('onedepth_'+oneval).appendChild(a);
 							}
 						}
 					});
-					h.preventDefault();
+					
 					return false;
 				});
 				
 				
+				$('.submenu').on('click','li',function(e){
+					
+					var twoval = $(this).val();
+					$.ajax({
+						type:'POST',
+						url:'http://127.0.0.1:5000/click',
+						data : 
+							{'pid' : twoval} ,
+						dataType:'JSON',
+						success:function(result){
+							// alert(result);
+							var obj = JSON.parse(JSON.stringify(result))
+							for (i=0; i<Object.keys(obj).length; i++) {
+								var a = document.createElement('li');
+								a.innerHTML = "<a href=''>"+ obj[i].title +"</a>";
+								document.getElementById(twoval).appendChild(a);
+							}
+						}
+					});
+					return false;
+				});
 			});
-			
-
+				
 		</script>
 
 	</head>
@@ -183,10 +180,7 @@
 						{% for list in sitemap | sort(attribute='id') %}
 						{% if (list.depth) == 1 %}
 						<li value = "{{list.id}}"><a href="">{{list.title}}</a>
-							<ol class = 'submenu' id= 'test_{{list.id}}'>
-								
-							</ol>
-							
+							<ol class ='submenu' id = "onedepth_{{list.id}}"></ol>
 						</li>
 						{% endif %}
 						{% endfor %}
