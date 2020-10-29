@@ -131,15 +131,13 @@
 							{'id' : tval} ,
 						dataType:'JSON',
 						success:function(result){
-							// alert(result);
-							
-							// alert(json_data);
-
 							var obj = JSON.parse(JSON.stringify(result))
 							for (i=0; i<Object.keys(obj).length; i++) {
 								var a = document.createElement('li');
-								a.innerHTML = "<a href=''>"+ obj[i].title +"</a>";
-								document.getElementById('test').appendChild(a);
+								a.setAttribute('value',obj[i].id)
+								a.setAttribute('id','test'+obj[i].id)
+								a.innerHTML = "<a href=''>"+ obj[i].title +"</a>"+"<ol class='submenu2' id=aaa"+obj[i].id+"></ol>";
+								document.getElementById('test_'+tval).appendChild(a);
 							}
 						}
 					});
@@ -147,11 +145,31 @@
 			});
 				
 
-				// $('.submenu>li').click(function(h){
-				// 	event.stopPropagation();
-				// 	$(this).find('.submenu').toggle();
-				// 	h.preventDefault(); //새로고침 안하게 하기
-				// });
+				$('.submenu').on('click','li',function(h){
+					
+					var bval=$(this).val();
+
+					$.ajax({
+						type:'POST',
+						url:'http://127.0.0.1:5000/click',
+						data : 
+							{'id' : bval} ,
+						dataType:'JSON',
+						
+						success:function(result){
+							var obj = JSON.parse(JSON.stringify(result))
+							for (i=0; i<Object.keys(obj).length; i++) {
+								var a = document.createElement('li');
+								a.setAttribute('value',obj[i].id);
+								a.innerHTML = "<a href=''>"+ obj[i].title +"</a>";
+								document.getElementById('aaa'+bval).appendChild(a);
+							}
+						}
+					});
+					h.preventDefault();
+					return false;
+				});
+				
 				
 			});
 			
@@ -165,7 +183,10 @@
 						{% for list in sitemap | sort(attribute='id') %}
 						{% if (list.depth) == 1 %}
 						<li value = "{{list.id}}"><a href="">{{list.title}}</a>
-							<ol class = 'submenu' id= 'test'></ol>
+							<ol class = 'submenu' id= 'test_{{list.id}}'>
+								
+							</ol>
+							
 						</li>
 						{% endif %}
 						{% endfor %}

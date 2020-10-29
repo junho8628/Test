@@ -33,7 +33,7 @@ class sitemap(db.Model,SerializerMixin):
 @app.route("/")
 def index():
     all_data = sitemap.query.order_by(sitemap.id.desc()).all() # selelct * from sitmemap
-    return render_template("sitemap2.html",sitemap = all_data)
+    return render_template("index.html",sitemap = all_data)
 
 @app.route("/admin")
 def admin():
@@ -67,7 +67,7 @@ def click():
     li = db.session.query(sitemap).filter_by(pid=value).all()
     a=[]
     for i in li :
-        a.append({'title' : i.title})
+        a.append({'title' : i.title,'id':i.id})
     
     json_list = json.dumps(a,ensure_ascii=False)
     return json_list
