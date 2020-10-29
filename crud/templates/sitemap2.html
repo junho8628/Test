@@ -134,10 +134,6 @@
 							{'pid' : oneval} ,
 						dataType:'JSON',
 						success:function(result){
-							// alert(result);
-							
-							// alert(json_data);
-
 							var obj = JSON.parse(JSON.stringify(result))
 							for (i=0; i<Object.keys(obj).length; i++) {
 								var a = document.createElement('li');
