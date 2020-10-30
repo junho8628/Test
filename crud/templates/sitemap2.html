@@ -125,48 +125,53 @@
 		<script>
 			$(function(){
 				// .off('click')
-				$('.rounded-list>li').on('click',function(s){
+				$('.rounded-list>li').on('click',function(){
 					var oneval = $(this).val();
-					$.ajax({
-						type:'POST',
-						url:'http://127.0.0.1:5000/click',
-						data : 
-							{'pid' : oneval} ,
-						dataType:'JSON',
-						success:function(result){
-							var obj = JSON.parse(JSON.stringify(result))
-							for (i=0; i<Object.keys(obj).length; i++) {
-								var a = document.createElement('li');
-								a.setAttribute('value',obj[i].id);
-								a.innerHTML = "<a href=''>"+ obj[i].title +"</a>"+"<ol class = 'submenu2' id = "+obj[i].id+"> </ol>";
-								document.getElementById('onedepth_'+oneval).appendChild(a);
+					if($(this).attr("data-loaded")=='yes') {
+						$.ajax({
+							type:'POST',
+							url:'http://127.0.0.1:5000/click',
+							data : 
+								{'pid' : oneval} ,
+							dataType:'JSON',
+							success:function(result){
+								var obj = JSON.parse(JSON.stringify(result))
+								for (i=0; i<Object.keys(obj).length; i++) {
+									var a = document.createElement('li');
+									a.setAttribute('value',obj[i].id);
+									a.setAttribute('data-loaded','yes');
+									a.innerHTML = "<a href=''>"+ obj[i].title +"</a>"+"<ol class = 'submenu2' id = "+obj[i].id+"> </ol>";
+									document.getElementById('onedepth_'+oneval).appendChild(a);
+								}
 							}
-						}
-					});
-					
+						});
+						$(this).attr("data-loaded","no");
+					}
 					return false;
 				});
 				
 				
 				$('.submenu').on('click','li',function(e){
-					
+					if($(this).attr("data-loaded")=='yes') {
 					var twoval = $(this).val();
-					$.ajax({
-						type:'POST',
-						url:'http://127.0.0.1:5000/click',
-						data : 
-							{'pid' : twoval} ,
-						dataType:'JSON',
-						success:function(result){
-							// alert(result);
-							var obj = JSON.parse(JSON.stringify(result))
-							for (i=0; i<Object.keys(obj).length; i++) {
-								var a = document.createElement('li');
-								a.innerHTML = "<a href=''>"+ obj[i].title +"</a>";
-								document.getElementById(twoval).appendChild(a);
+						$.ajax({
+							type:'POST',
+							url:'http://127.0.0.1:5000/click',
+							data : 
+								{'pid' : twoval} ,
+							dataType:'JSON',
+							success:function(result){
+								// alert(result);
+								var obj = JSON.parse(JSON.stringify(result))
+								for (i=0; i<Object.keys(obj).length; i++) {
+									var a = document.createElement('li');
+									a.innerHTML = "<a href=''>"+ obj[i].title +"</a>";
+									document.getElementById(twoval).appendChild(a);
+								}
 							}
-						}
-					});
+						});
+						$(this).attr("data-loaded","no");
+					}
 					return false;
 				});
 			});
@@ -179,7 +184,7 @@
 				<ol class="rounded-list">
 						{% for list in sitemap | sort(attribute='id') %}
 						{% if (list.depth) == 1 %}
-						<li value = "{{list.id}}"><a href="">{{list.title}}</a>
+						<li value = "{{list.id}}" data-loaded="yes"><a href="">{{list.title}}</a>
 							<ol class ='submenu' id = "onedepth_{{list.id}}"></ol>
 						</li>
 						{% endif %}

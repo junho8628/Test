@@ -33,7 +33,7 @@ class sitemap(db.Model,SerializerMixin):
 @app.route("/")
 def index():
     all_data = sitemap.query.order_by(sitemap.id.desc()).all() # selelct * from sitmemap
-    return render_template("index.html",sitemap = all_data)
+    return render_template("sitemap2.html",sitemap = all_data)
 
 @app.route("/admin")
 def admin():
@@ -57,7 +57,6 @@ def insertUser():
         flash(u"db가 성공적으로 등록되었습니다.","success") # 한글은 앞에 u넣기
 
         return redirect(url_for('index'))   
-<<<<<<< HEAD
      
 @app.route('/click',methods=['GET','POST'])
 def click():
@@ -67,19 +66,6 @@ def click():
     a=[]
     for i in li :
         a.append({'title' : i.title, 'id' : i.id})
-=======
-
-        
-@app.route('/click',methods=['GET','POST'])
-def click():
-
-    value = request.form['id']
-    # value = 1
-    li = db.session.query(sitemap).filter_by(pid=value).all()
-    a=[]
-    for i in li :
-        a.append({'title' : i.title,'id':i.id})
->>>>>>> bfd614df60970b58bcfdb3bb405238634f34ba88
     
     json_list = json.dumps(a,ensure_ascii=False)
     return json_list
