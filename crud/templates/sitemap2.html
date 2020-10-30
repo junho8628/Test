@@ -147,6 +147,10 @@
 						});
 						$(this).attr("data-loaded","no");
 					}
+					else if($(this).attr("data-loaded")=='no'){
+						$(this).find('ol').empty();
+						$(this).attr("data-loaded","yes");
+					}
 					return false;
 				});
 				
@@ -172,6 +176,10 @@
 						});
 						$(this).attr("data-loaded","no");
 					}
+					else if($(this).attr("data-loaded")=='no'){
+						$(this).find('ol').empty();
+						$(this).attr("data-loaded","yes");
+					}
 					return false;
 				});
 			});
@@ -182,13 +190,13 @@
 	<body>
 		<h1 id="title">Zio<span>You</span> SiteMap</h1>
 				<ol class="rounded-list">
-						{% for list in sitemap | sort(attribute='id') %}
-						{% if (list.depth) == 1 %}
-						<li value = "{{list.id}}" data-loaded="yes"><a href="">{{list.title}}</a>
-							<ol class ='submenu' id = "onedepth_{{list.id}}"></ol>
-						</li>
-						{% endif %}
-						{% endfor %}
-					</ol>
+					{% for list in sitemap | sort(attribute='id') %}
+					{% if (list.depth) == 1 %}
+					<li value = "{{list.id}}" data-loaded="yes"><a href="">{{list.title}}</a>
+						<ol class ='submenu' id = "onedepth_{{list.id}}"></ol>
+					</li>
+					{% endif %}
+					{% endfor %}
+				</ol>
 		</body>	
 </html>
