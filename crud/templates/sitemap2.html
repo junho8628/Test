@@ -110,78 +110,56 @@
 				color:black;
 			}
 
-			.pop-layer .pop-container {
-			padding: 20px 25px;
+			/* btn */
+			/* .btn-wrap {display: flex; justify-content : center; align-items : center; height: 100vh;}
+			.btn-wrap > a {background-color:#fff; display:inline-block; color: rgba(0,0,0,0.7); padding: 13px 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.26); height:23px; line-height: 23px; margin:5px; border-radius: 3px;} */
+
+			/* modal */
+			#modal {position: fixed; left:0; top:0; width: 100%; height: 100%; transform: scale(0); z-index: 1;}
+			#modal .modal-bg {background: rgba(0,0,0,0.7); display:flex; align-items: center; justify-content: center; height: 100%; }
+			#modal .modal-bg .modal-cont {position:relative; background: #fff; padding: 40px; max-width: 500px; display: inline-block;}
+			#modal .modal-bg .modal-cont h2 {font-size: 30px; margin:0;}
+			#modal .modal-bg .modal-cont p {font-size: 18px; }
+			#modal .modal-bg .modal-cont .close {position: absolute; top: 0; right:0; margin:20px; padding: 10px; background: #87ceeb; border-radius: 50%; }
+			#modal .modal-bg .modal-cont .close:hover{background-color: blue;}
+			#modal .modal-bg .modal-cont .close svg {width: 24px; fill: #fff; vertical-align: top;}
+
+
+			#modal.one {
+				transform: scaleY(0.01) scaleX(0);
+				animation: unfoldIn 1s cubic-bezier(0.165, 0.85, 0.44, 1) forwards;
+			}
+			#modal.one .modal-bg .modal-cont {
+				transform: scale(0);
+				animation: zoomIn 0.5s 0.8s cubic-bezier(0.165, 0.85, 0.44, 1) forwards;
 			}
 
-			.pop-layer p.ctxt {
-			color: #666;
-			line-height: 25px;
+			#modal.one.out {
+				transform: scale(1);
+				animation: unfoldOut 1s cubic-bezier(0.165, 0.85, 0.44, 1) forwards;
+			}
+			#modal.one.out .modal-bg .modal-cont {
+				transform: scale(0);
+				animation: zoomOut 0.5s cubic-bezier(0.165, 0.85, 0.44, 1) forwards;
 			}
 
-			.pop-layer .btn-r {
-			width: 100%;
-			margin: 10px 0 20px;
-			padding-top: 10px;
-			border-top: 1px solid #DDD;
-			text-align: right;
+			@keyframes unfoldIn{
+				0% {transform: scaleY(0.005) scaleX(0);}
+				50% {transform: scaleY(0.005) scaleX(1);}
+				100% {transform: scaleY(1) scaleX(1);}
 			}
-
-			.pop-layer {
-			display: none;
-			position: absolute;
-			top: 50%;
-			left: 50%;
-			width: 410px;
-			height: auto;
-			background-color: #fff;
-			border: 5px solid #3571B5;
-			z-index: 10;
-			border-radius: 10px;
+			@keyframes unfoldOut{
+				0% {transform: scaleY(1) scaleX(1);}
+				50% {transform: scaleY(0.005) scaleX(1);}
+				100% {transform: scaleY(0.005) scaleX(0);}
 			}
-
-			.dim-layer {
-			display: none;
-			position: fixed;
-			_position: absolute;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 100%;
-			z-index: 100;
+			@keyframes zoomIn {
+				0% {transform: scale(0);}
+				100% {transform: scale(1); }
 			}
-
-			.dim-layer .action {
-			position: absolute;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 100%;
-			background: #000;
-			opacity: .5;
-			filter: alpha(opacity=50);
-			}
-
-			.dim-layer .pop-layer {
-			display: block;
-			}
-
-			a.btn-layerClose {
-			display: inline-block;
-			height: 25px;
-			padding: 0 14px 0;
-			border: 1px solid #304a8a;
-			background-color: #3f5a9d;
-			font-size: 13px;
-			color: #fff;
-			border-radius: 10px;
-			line-height: 25px;
-			}
-
-			a.btn-layerClose:hover {
-			border: 1px solid #091940;
-			background-color: #1f326a;
-			color: #fff;
+			@keyframes zoomOut {
+				0% {transform: scale(1);}
+				100% {transform: scale(0); }
 			}
 			@media screen and (max-width: 768px){
 				body{
@@ -202,7 +180,20 @@
 				margin-left:3px;
 				cursor :pointer;
 			}
-			.brn:hover{
+			.gobtn {
+				display: inline-block;
+				border-radius:10px 10px 10px 10px;
+				border : 1px solid skyblue;
+				background-color:#eee;
+				color:black;
+				padding:5px;
+				margin-left:3px;
+				cursor :pointer;
+			}
+			.btn:hover{
+				background-color:white;
+			}
+			.gobtn:hover{
 				background-color:white;
 			}
 			input:focus {outline:none;}
@@ -228,7 +219,7 @@
 									a.setAttribute('value',obj[i].id);
 									a.setAttribute('data-loaded','yes');
 									a.innerHTML = "<a href=''>"+ obj[i].title +
-									"<input class ='btn' type = 'button' name = 'urlbtn' value ='이동하기'><input class ='btn' type = 'button' name = 'describebtn' value ='설명보기'></a>"+
+									"<input class ='gobtn' type = 'button' name = 'urlbtn' value ='이동하기'><input class ='btn' type = 'button' name = 'describebtn' value ='설명보기'></a>"+
 									"<ol class = 'submenu2' id = "+obj[i].id+"> </ol>";
 									document.getElementById('onedepth_'+oneval).appendChild(a);
 								}
@@ -272,83 +263,60 @@
 					}
 					return false;
 				});
+				$(".btn").click(function(){
+    			$("#modal").removeAttr("class").addClass("one");
+				return false;
+				});
+
+				$(".close").click(function(){
+    			$("#modal").addClass("out");
+				});
 				
-		//클릭시 해당클래스의 href를 가져와 변수에저장
-		$('.btn-example').click(function(){
-        var $href = $(this).attr('href');
-        layer_popup($href);
-    	});
-
-    function layer_popup(el){
-
-        var $el = $(el);        //레이어의 id를 $el 변수에 저장
-        var isDim = $el.prev().hasClass('action');   //dimmed 레이어를 감지하기 위한 boolean 변수
-
-        isDim ? $('.dim-layer').fadeIn() : $el.fadeIn();
-
-        var $elWidth = ~~($el.outerWidth()),
-            $elHeight = ~~($el.outerHeight()),
-            docWidth = $(document).width(),
-            docHeight = $(document).height();
-
-        // 화면의 중앙에 레이어를 띄운다.
-        if ($elHeight < docHeight || $elWidth < docWidth) {
-            $el.css({
-                marginTop: -$elHeight /2,
-                marginLeft: -$elWidth/2
-            })
-        } else {
-            $el.css({top: 0, left: 0});
-        }
-
-        $el.find('a.btn-layerClose').click(function(){
-            isDim ? $('.dim-layer').fadeOut() : $el.fadeOut(); // 닫기 버튼을 클릭하면 레이어가 닫힌다.
-            return false;
-        });
-
-        $('.layer .action').click(function(){
-            $('.dim-layer').fadeOut();
-            return false;
-        });
-
-    }
+		
 			});
 		</script>
 
 	</head>
 	<body>
 		<h1 id="title">Zio<span>You</span> SiteMap</h1>
-		<a href="#layer1" class="btn-example">일반 팝업레이어</a>
+		<!-- <a href="#" class="btn">Popup</a> -->
 				<ol class="rounded-list">
 					{% for list in sitemap | sort(attribute='id') %}
 					{% if (list.depth) == 1 %}
 					<li value = "{{list.id}}" data-loaded="yes"><a href="">{{list.title}}
-						<input class ="btn" type = "button" name = "urlbtn" value ="이동하기">
-						<input class ="btn" type = "button" name = "describebtn" value ="설명보기"></a>
+						<input class ="gobtn" type = "button" name = "urlbtn" value ="이동하기">
+						<input class ="btn" id="test" type = "button" name = "describebtn" value ="설명보기"></a>
 						<ol class ='submenu' id = "onedepth_{{list.id}}"></ol>
 					</li>
-					<!-- 팝업창시작 -->
-
-					<div id="layer1" class="pop-layer">
-						<div class="pop-container">
-							<div class="pop-conts">
-								<!--content //-->
-								<p class="ctxt mb20">Thank you.<br><hr>
-									this is zioyou sitemap<br>
-									test popup<br><br>
-									Hope to see you soon!
-								</p>
 					
-								<div class="btn-r">
-									<a href="#" class="btn-layerClose">Close</a>
-								</div>
-								<!--// content-->
-							</div>
-						</div>
-					</div>
-					<!-- 팝업창 종료 -->
 					{% endif %}
 					{% endfor %}
 				</ol>
+				<!-- 팝업창시작 -->
+
+				<!-- <div class="btn-wrap">
+					<a href="#" class="btn">Popup</a>
+				</div>
+				
+				 -->
+				<div id="modal">
+					<div class="modal-bg">
+						<div class="modal-cont">
+							<h2>Layer Popup</h2>
+							<p>We hope you have enjoyed using Materialize and 
+								if you feel like it has helped you out and want to support the team you can help us by 
+								donating or backing us on Patreon. Any amount would help support and continue development on this project 
+								and is greatly appreciated.</p>
+							<a href="#" class="close close1">
+								<svg viewBox="0 0 24 24">
+									<path d="M14.1,12L22,4.1c0.6-0.6,0.6-1.5,0-2.1c-0.6-0.6-1.5-0.6-2.1,0L12,9.9L4.1,2C3.5,1.4,2.5,1.4,2,2C1.4,2.5,1.4,3.5,2,4.1
+											L9.9,12L2,19.9c-0.6,0.6-0.6,1.5,0,2.1c0.3,0.3,0.7,0.4,1.1,0.4s0.8-0.1,1.1-0.4l7.9-7.9l7.9,7.9c0.3,0.3,0.7,0.4,1.1,0.4
+											s0.8-0.1,1.1-0.4c0.6-0.6,0.6-1.5,0-2.1L14.1,12z"/>
+								</svg>
+							</a>
+						</div>
+					</div>
+				</div>
+				<!-- 팝업창 종료 -->
 		</body>	
 </html>
