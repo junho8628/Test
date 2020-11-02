@@ -33,7 +33,7 @@ class sitemap(db.Model,SerializerMixin):
 @app.route("/")
 def index():
     all_data = sitemap.query.order_by(sitemap.id.desc()).all() # selelct * from sitmemap
-    return render_template("sitemap2.html",sitemap = all_data)
+    return render_template("index.html",sitemap = all_data)
 
 @app.route("/admin")
 def admin():

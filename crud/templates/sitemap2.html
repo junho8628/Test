@@ -11,7 +11,7 @@
 				background-repeat: no-repeat;
 				/*background-size: cover;*/
 			}
-
+			
 			/* -------------------------------------- */
 
 			ol{
@@ -320,35 +320,35 @@
 		<h1 id="title">Zio<span>You</span> SiteMap</h1>
 		<a href="#layer1" class="btn-example">일반 팝업레이어</a>
 				<ol class="rounded-list">
-					{% for list in sitemap | sort(attribute='id') %}
+					{% for list in sitemap | sort(attribute='sortseq') %}
 					{% if (list.depth) == 1 %}
 					<li value = "{{list.id}}" data-loaded="yes"><a href="">{{list.title}}
 						<input class ="btn" type = "button" name = "urlbtn" value ="이동하기">
 						<input class ="btn" type = "button" name = "describebtn" value ="설명보기"></a>
 						<ol class ='submenu' id = "onedepth_{{list.id}}"></ol>
 					</li>
-					<!-- 팝업창시작 -->
-
-					<div id="layer1" class="pop-layer">
-						<div class="pop-container">
-							<div class="pop-conts">
-								<!--content //-->
-								<p class="ctxt mb20">Thank you.<br><hr>
-									this is zioyou sitemap<br>
-									test popup<br><br>
-									Hope to see you soon!
-								</p>
-					
-								<div class="btn-r">
-									<a href="#" class="btn-layerClose">Close</a>
-								</div>
-								<!--// content-->
-							</div>
-						</div>
-					</div>
-					<!-- 팝업창 종료 -->
 					{% endif %}
 					{% endfor %}
 				</ol>
+				<!-- 팝업창시작 -->
+
+				<div id="layer1" class="pop-layer">
+					<div class="pop-container">
+						<div class="pop-conts">
+							<!--content //-->
+							<p class="ctxt mb20">Thank you.<br><hr>
+								this is zioyou sitemap<br>
+								test popup<br><br>
+								Hope to see you soon!
+							</p>
+				
+							<div class="btn-r">
+								<a href="#" class="btn-layerClose">Close</a>
+							</div>
+							<!--// content-->
+						</div>
+					</div>
+				</div>
+				<!-- 팝업창 종료 -->
 		</body>	
 </html>

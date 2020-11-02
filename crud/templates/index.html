@@ -8,14 +8,14 @@
 <body>
 
     <h1>SiteMap</h1>
-    
+    <h1><a href="#title">아래로</a></h1>
     {% for row in sitemap | sort(attribute='id')%}
         {{row.id}}, {{row.title}} , {{row.url}} , {{row.depth}} , {{row.pid}} , {{row.sortseq}} , {{row.describe}}
         <input type="button" value="삭제" onclick="fDel('{{row.id}}')">
         <input type="button" value="수정" onclick="fEdit('{{row.id}}', '{{row.title}}', '{{row.url}}', '{{row.depth}}', '{{row.pid}}','{{row.sortseq}}', '{{row.describe}}')">
         <br>
     {% endfor %}
-    <h1>title</h1>
+    <h1 id ="title">title</h1>
     <form name="frmEdit" action="" method="POST">
         id : <input type="text" name="id" value="작성x"> <br>
         title : <input type="text" name="title"> <br>
