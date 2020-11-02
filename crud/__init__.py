@@ -57,17 +57,15 @@ def insertUser():
         flash(u"db가 성공적으로 등록되었습니다.","success") # 한글은 앞에 u넣기
 
         return redirect(url_for('index'))   
-
-        
+     
 @app.route('/click',methods=['GET','POST'])
 def click():
-
     value = request.form['pid']
-    # value = 1
+    # value = 19
     li = db.session.query(sitemap).filter_by(pid=value).all()
     a=[]
     for i in li :
-        a.append({'title' : i.title,'id':i.id})
+        a.append({'title' : i.title, 'id' : i.id})
     
     json_list = json.dumps(a,ensure_ascii=False)
     return json_list
