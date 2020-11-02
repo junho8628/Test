@@ -109,6 +109,80 @@
 			span {
 				color:black;
 			}
+
+			.pop-layer .pop-container {
+			padding: 20px 25px;
+			}
+
+			.pop-layer p.ctxt {
+			color: #666;
+			line-height: 25px;
+			}
+
+			.pop-layer .btn-r {
+			width: 100%;
+			margin: 10px 0 20px;
+			padding-top: 10px;
+			border-top: 1px solid #DDD;
+			text-align: right;
+			}
+
+			.pop-layer {
+			display: none;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			width: 410px;
+			height: auto;
+			background-color: #fff;
+			border: 5px solid #3571B5;
+			z-index: 10;
+			border-radius: 10px;
+			}
+
+			.dim-layer {
+			display: none;
+			position: fixed;
+			_position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			z-index: 100;
+			}
+
+			.dim-layer .action {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background: #000;
+			opacity: .5;
+			filter: alpha(opacity=50);
+			}
+
+			.dim-layer .pop-layer {
+			display: block;
+			}
+
+			a.btn-layerClose {
+			display: inline-block;
+			height: 25px;
+			padding: 0 14px 0;
+			border: 1px solid #304a8a;
+			background-color: #3f5a9d;
+			font-size: 13px;
+			color: #fff;
+			border-radius: 10px;
+			line-height: 25px;
+			}
+
+			a.btn-layerClose:hover {
+			border: 1px solid #091940;
+			background-color: #1f326a;
+			color: #fff;
+			}
 			@media screen and (max-width: 768px){
 				body{
 					background-image: none;
@@ -124,66 +198,136 @@
 		<script src="../static/js/jquery-3.5.1.min.js"></script>
 		<script>
 			$(function(){
-				// .off('click')
-				$('.rounded-list>li').on('click',function(s){
+				$('.rounded-list>li').on('click',function(){
 					var oneval = $(this).val();
-					$.ajax({
-						type:'POST',
-						url:'http://127.0.0.1:5000/click',
-						data : 
-							{'pid' : oneval} ,
-						dataType:'JSON',
-						success:function(result){
-							var obj = JSON.parse(JSON.stringify(result))
-							for (i=0; i<Object.keys(obj).length; i++) {
-								var a = document.createElement('li');
-								a.setAttribute('value',obj[i].id);
-								a.innerHTML = "<a href=''>"+ obj[i].title +"</a>"+"<ol class = 'submenu2' id = "+obj[i].id+"> </ol>";
-								document.getElementById('onedepth_'+oneval).appendChild(a);
+					if($(this).attr("data-loaded")=='yes') {
+						$.ajax({
+							type:'POST',
+							url:'http://127.0.0.1:5000/click',
+							data : 
+								{'pid' : oneval} ,
+							dataType:'JSON',
+							success:function(result){
+								var obj = JSON.parse(JSON.stringify(result))
+								for (i=0; i<Object.keys(obj).length; i++) {
+									var a = document.createElement('li');
+									a.setAttribute('value',obj[i].id);
+									a.setAttribute('data-loaded','yes');
+									a.innerHTML = "<a href=''>"+ obj[i].title +"</a>"+"<ol class = 'submenu2' id = "+obj[i].id+"> </ol>";
+									document.getElementById('onedepth_'+oneval).appendChild(a);
+								}
 							}
-						}
-					});
-					
+						});
+						$(this).attr("data-loaded","no");
+					}else if($(this).attr("data-loaded")=='no'){
+						$(this).find('ol').empty();
+						$(this).attr('data-loaded','yes');
+					}
 					return false;
 				});
 				
 				
 				$('.submenu').on('click','li',function(e){
-					
+					if($(this).attr("data-loaded")=='yes') {
 					var twoval = $(this).val();
-					$.ajax({
-						type:'POST',
-						url:'http://127.0.0.1:5000/click',
-						data : 
-							{'pid' : twoval} ,
-						dataType:'JSON',
-						success:function(result){
-							// alert(result);
-							var obj = JSON.parse(JSON.stringify(result))
-							for (i=0; i<Object.keys(obj).length; i++) {
-								var a = document.createElement('li');
-								a.innerHTML = "<a href=''>"+ obj[i].title +"</a>";
-								document.getElementById(twoval).appendChild(a);
+						$.ajax({
+							type:'POST',
+							url:'http://127.0.0.1:5000/click',
+							data : 
+								{'pid' : twoval} ,
+							dataType:'JSON',
+							success:function(result){
+								var obj = JSON.parse(JSON.stringify(result))
+								for (i=0; i<Object.keys(obj).length; i++) {
+									var a = document.createElement('li');
+									a.innerHTML = "<a href=''>"+ obj[i].title +"</a>";
+									document.getElementById(twoval).appendChild(a);
+								}
 							}
-						}
-					});
+						});
+						$(this).attr("data-loaded","no");
+					}else if($(this).attr("data-loaded")=='no'){
+						$(this).find('ol').empty();
+						$(this).attr('data-loaded','yes');
+					}
 					return false;
 				});
-			});
 				
+		//클릭시 해당클래스의 href를 가져와 변수에저장
+		$('.btn-example').click(function(){
+        var $href = $(this).attr('href');
+        layer_popup($href);
+    	});
+
+    function layer_popup(el){
+
+        var $el = $(el);        //레이어의 id를 $el 변수에 저장
+        var isDim = $el.prev().hasClass('action');   //dimmed 레이어를 감지하기 위한 boolean 변수
+
+        isDim ? $('.dim-layer').fadeIn() : $el.fadeIn();
+
+        var $elWidth = ~~($el.outerWidth()),
+            $elHeight = ~~($el.outerHeight()),
+            docWidth = $(document).width(),
+            docHeight = $(document).height();
+
+        // 화면의 중앙에 레이어를 띄운다.
+        if ($elHeight < docHeight || $elWidth < docWidth) {
+            $el.css({
+                marginTop: -$elHeight /2,
+                marginLeft: -$elWidth/2
+            })
+        } else {
+            $el.css({top: 0, left: 0});
+        }
+
+        $el.find('a.btn-layerClose').click(function(){
+            isDim ? $('.dim-layer').fadeOut() : $el.fadeOut(); // 닫기 버튼을 클릭하면 레이어가 닫힌다.
+            return false;
+        });
+
+        $('.layer .action').click(function(){
+            $('.dim-layer').fadeOut();
+            return false;
+        });
+
+    }
+			});
 		</script>
 
 	</head>
 	<body>
 		<h1 id="title">Zio<span>You</span> SiteMap</h1>
+		<a href="#layer1" class="btn-example">일반 팝업레이어</a>
 				<ol class="rounded-list">
 						{% for list in sitemap | sort(attribute='id') %}
 						{% if (list.depth) == 1 %}
-						<li value = "{{list.id}}"><a href="">{{list.title}}</a>
+						<li value = "{{list.id}}" data-loaded="yes"><a href="">{{list.title}}</a>
 							<ol class ='submenu' id = "onedepth_{{list.id}}"></ol>
 						</li>
 						{% endif %}
 						{% endfor %}
 					</ol>
+					<!-- 팝업창시작 -->
+
+					<div id="layer1" class="pop-layer">
+						<div class="pop-container">
+							<div class="pop-conts">
+								<!--content //-->
+								<p class="ctxt mb20">Thank you.<br><hr>
+									this is zioyou sitemap<br>
+									test popup<br><br>
+									Hope to see you soon!
+								</p>
+					
+								<div class="btn-r">
+									<a href="#" class="btn-layerClose">Close</a>
+								</div>
+								<!--// content-->
+							</div>
+						</div>
+					</div>
+					<!-- 팝업창 종료 -->
+
 		</body>	
 </html>
