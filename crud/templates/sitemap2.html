@@ -117,8 +117,21 @@
 					float: none;
 					width: auto;
 				}
-
 			}
+			.btn {
+				display: inline-block;
+				border-radius:10px 10px 10px 10px;
+				border : 1px solid skyblue;
+				background-color:#eee;
+				color:black;
+				padding:5px;
+				margin-left:3px;
+				cursor :pointer;
+			}
+			.brn:hover{
+				background-color:white;
+			}
+			input:focus {outline:none;}
 		</style>
 
 		<script src="../static/js/jquery-3.5.1.min.js"></script>
@@ -140,7 +153,9 @@
 									var a = document.createElement('li');
 									a.setAttribute('value',obj[i].id);
 									a.setAttribute('data-loaded','yes');
-									a.innerHTML = "<a href=''>"+ obj[i].title +"</a>"+"<ol class = 'submenu2' id = "+obj[i].id+"> </ol>";
+									a.innerHTML = "<a href=''>"+ obj[i].title +
+									"<input class ='btn' type = 'button' name = 'urlbtn' value ='이동하기'><input class ='btn' type = 'button' name = 'describebtn' value ='설명보기'></a>"+
+									"<ol class = 'submenu2' id = "+obj[i].id+"> </ol>";
 									document.getElementById('onedepth_'+oneval).appendChild(a);
 								}
 							}
@@ -169,7 +184,8 @@
 								var obj = JSON.parse(JSON.stringify(result))
 								for (i=0; i<Object.keys(obj).length; i++) {
 									var a = document.createElement('li');
-									a.innerHTML = "<a href=''>"+ obj[i].title +"</a>";
+									a.innerHTML = "<a href=''>"+ obj[i].title +
+									"<input class ='btn' type = 'button' name = 'urlbtn' value ='이동하기'><input class ='btn' type = 'button' name = 'describebtn' value ='설명보기'></a>";
 									document.getElementById(twoval).appendChild(a);
 								}
 							}
@@ -192,7 +208,9 @@
 				<ol class="rounded-list">
 					{% for list in sitemap | sort(attribute='id') %}
 					{% if (list.depth) == 1 %}
-					<li value = "{{list.id}}" data-loaded="yes"><a href="">{{list.title}}</a>
+					<li value = "{{list.id}}" data-loaded="yes"><a href="">{{list.title}}
+						<input class ="btn" type = "button" name = "urlbtn" value ="이동하기">
+						<input class ="btn" type = "button" name = "describebtn" value ="설명보기"></a>
 						<ol class ='submenu' id = "onedepth_{{list.id}}"></ol>
 					</li>
 					{% endif %}
