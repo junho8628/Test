@@ -199,9 +199,8 @@
 		<script>
 			
 			$(function(){
-				// .off('click')
+				gourl();
 				open();
-				dele();
 				$('.rounded-list>li').on('click',function(){
 					var oneval = $(this).val();
 					
@@ -238,7 +237,6 @@
 				});
 				
 				$('.submenu').on('click','li',function(e){
-					
 					if($(this).attr("data-loaded")=='yes') {
 					var twoval = $(this).val();
 						$.ajax({
@@ -248,7 +246,6 @@
 								{'pid' : twoval} ,
 							dataType:'JSON',
 							success:function(result){
-							
 								var obj = JSON.parse(JSON.stringify(result))
 								for (i=0; i<Object.keys(obj).length; i++) {
 									var a = document.createElement('li');
@@ -281,7 +278,7 @@
 							success:function(result){
 								// alert(result['url']);
 								var basic_url = "https://dev.zioyou.com";
-								window.open(basic_url+result['url'],"new");
+								window.open(basic_url+result['url'],'newpop');
 							}
 						});
 						return false;
@@ -313,6 +310,7 @@
 					});
 					return false;
 				}
+
 				function dele(){
 					$(".close").click(function(){
 						$("#modal").addClass("out");
