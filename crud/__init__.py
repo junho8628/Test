@@ -33,7 +33,7 @@ class sitemap(db.Model,SerializerMixin):
 @app.route("/")
 def index():
     all_data = sitemap.query.order_by(sitemap.id.desc()).all() # selelct * from sitmemap
-    return render_template("index.html",sitemap = all_data)
+    return render_template("sitemap2.html",sitemap = all_data)
 
 @app.route("/admin")
 def admin():
@@ -62,7 +62,7 @@ def insertUser():
 def click():
     value = request.form['pid']
     # value = 19
-    li = db.session.query(sitemap).filter_by(pid=value).all()
+    li = db.session.query(sitemap).filter_by(pid=value).order_by(sitemap.sortseq).all()
     a=[]
     for i in li :
         a.append({'title' : i.title, 'id' : i.id})
