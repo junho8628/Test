@@ -201,10 +201,9 @@
 			$(function(){
 				// .off('click')
 				open();
-				dele();
 				$('.rounded-list>li').on('click',function(){
 					var oneval = $(this).val();
-					open();
+					
 					if($(this).attr("data-loaded")=='yes') {
 						$.ajax({
 							type:'POST',
@@ -215,24 +214,15 @@
 							success:function(result){
 								var obj = JSON.parse(JSON.stringify(result))
 								for (i=0; i<Object.keys(obj).length; i++) {
-									var a = document.createElement('li');
-									a.setAttribute('value',obj[i].id);
-									a.setAttribute('data-loaded','yes');
-									a.innerHTML = "<a href=''>"+ obj[i].title +
-									"<input class ='gobtn' type = 'button' name = 'urlbtn' value ='이동하기'><input class ='btn' type = 'button' name = 'describebtn' value ='설명보기'></a>"+
-									"<ol class = 'submenu2' id = "+obj[i].id+"> </ol>";
-									document.getElementById('onedepth_'+oneval).appendChild(a);
-
-									$(".btn").click(function(){
-									$("#modal").removeAttr("class").addClass("one");
-									return false;
-									});
-
-									$(".close").click(function(){
-									$("#modal").addClass("out");
-									});
-
+								var a = document.createElement('li');
+								a.setAttribute('value',obj[i].id);
+								a.setAttribute('data-loaded','yes');
+								a.innerHTML = "<a href=''>"+ obj[i].title +
+								"<input class ='gobtn' type = 'button' name = 'urlbtn' value ='이동하기'><input class ='btn' type = 'button' name = 'describebtn' value ='설명보기'></a>"+
+								"<ol class = 'submenu2' id = "+obj[i].id+"> </ol>";
+								document.getElementById('onedepth_'+oneval).appendChild(a);
 								}
+								open();
 							}
 						});
 						$(this).attr("data-loaded","no");
@@ -245,7 +235,6 @@
 				});
 				
 				$('.submenu').on('click','li',function(e){
-					open();
 					if($(this).attr("data-loaded")=='yes') {
 					var twoval = $(this).val();
 						$.ajax({
@@ -255,23 +244,14 @@
 								{'pid' : twoval} ,
 							dataType:'JSON',
 							success:function(result){
-							
 								var obj = JSON.parse(JSON.stringify(result))
 								for (i=0; i<Object.keys(obj).length; i++) {
 									var a = document.createElement('li');
 									a.innerHTML = "<a href=''>"+ obj[i].title +
 									"<input class ='gobtn' type = 'button' name = 'urlbtn' value ='이동하기'><input class ='btn' type = 'button' name = 'describebtn' value ='설명보기'></a>";
 									document.getElementById(twoval).appendChild(a);
-
-									$(".btn").click(function(){
-									$("#modal").removeAttr("class").addClass("one");
-									return false;
-									});
-									$(".close").click(function(){
-									$("#modal").addClass("out");
-									});
-
 								}
+								open();
 							}
 						});
 						$(this).attr("data-loaded","no");
@@ -294,7 +274,7 @@
 							success:function(result){
 								// alert(result['url']);
 								var basic_url = "https://dev.zioyou.com";
-								window.open(basic_url+result['url']);
+								window.open(basic_url+result['url'],'newpop');
 							}
 						});
 						return false;
@@ -325,6 +305,7 @@
 					});
 					return false;
 				}
+
 				function dele(){
 					$(".close").click(function(){
 						$("#modal").addClass("out");
