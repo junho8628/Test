@@ -135,7 +135,11 @@
 		-검색하기:날짜 기간을 정할수 있다/bbs/BbsMy_UnRead?addbbs=4
 	내가 리플달은 게시글:내가 리플달은 게시글을 볼수있다/bbs/BbsMy_Reply?addbbs=4
 		-검색하기:날짜 기간을 정할수 있다/bbs/BbsMy_Reply?addbbs=4
+<<<<<<< HEAD
 	환경설정:경영관리의 환경설정 할수있는 페이지다/bbs/bbssys_conf?addbbs=4
+=======
+	환경설정:경영관리의 환경설정 할수있는 페이지다/bbs/bbssys_conf?addbbs=1
+>>>>>>> ec1d2e4325afa322823ee3ebe98d7b62f2b0b4b4
 #R&D [연구개발 자료를 확인할 수 있는 페이지]
 	게시판메인:최근 게시물과 나에게 열람권한이 부여된 게시방, 열람회수 top10등을 알수있다,/bbs/BbsMain?addbbs=5
 		-모바일앱에서 게시판 사용방법 안내:지오유 모바일 앱의 사용방법을 알수있는 템플릿으로 이동한다/zioyou.mobile/appintroduction?app=bbs
