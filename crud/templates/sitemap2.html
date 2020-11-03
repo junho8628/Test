@@ -218,16 +218,8 @@
 									"<input class ='gobtn' type = 'button' name = 'urlbtn' value ='이동하기'><input class ='btn' type = 'button' name = 'describebtn' value ='설명보기'></a>"+
 									"<ol class = 'submenu2' id = "+obj[i].id+"> </ol>";
 									document.getElementById('onedepth_'+oneval).appendChild(a);
-
-									$(".btn").click(function(){
-									$("#modal").removeAttr("class").addClass("one");
-									return false;
-									});
-
-									$(".close").click(function(){
-									$("#modal").addClass("out");
-									});
-
+									start();
+									cl();
 								}
 							}
 						});
@@ -258,15 +250,8 @@
 									a.innerHTML = "<a href=''>"+ obj[i].title +
 									"<input class ='gobtn' type = 'button' name = 'urlbtn' value ='이동하기'><input class ='btn' type = 'button' name = 'describebtn' value ='설명보기'></a>";
 									document.getElementById(twoval).appendChild(a);
-
-									$(".btn").click(function(){
-									$("#modal").removeAttr("class").addClass("one");
-									return false;
-									});
-									$(".close").click(function(){
-									$("#modal").addClass("out");
-									});
-
+									start();
+									cl();
 								}
 							}
 						});
@@ -279,28 +264,21 @@
 					return false;
 				});
 
-			
+			function start(){
 				$(".btn").click(function(){
     			$("#modal").removeAttr("class").addClass("one");
 				return false;
 				});
 
+			}
+			function cl(){
 				$(".close").click(function(){
     			$("#modal").addClass("out");
 				});
 
-				
-			
-				
-				
-		
+			}				
 			});
-			// function test(){
-			
-    			// $("#modal").removeAttr("class").addClass("one");
-				// return false;
-				
-			// }
+
 		</script>
 
 	</head>
