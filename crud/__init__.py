@@ -70,6 +70,24 @@ def click():
     json_list = json.dumps(a,ensure_ascii=False)
     return json_list
 
+@app.route('/urlclick',methods=['GET','POST'])
+def urlclick():
+    uid = request.form['urlid']
+    # uid = 1
+    url = db.session.query(sitemap).filter_by(id = uid).one()
+    a={'url' : url.url}
+    json_url = json.dumps(a)
+    return json_url
+
+@app.route('/desclick',methods=['GET','POST'])
+def desclick():
+    desid = request.form['desid']
+    # desid = 1
+    des = db.session.query(sitemap).filter_by(id = desid).one()
+    a={'title' : des.title , 'describe' : des.describe}
+    json_des = json.dumps(a,ensure_ascii=False)
+    return json_des
+
 @app.route('/update', methods=['GET','POST'])
 def update():
     if request.method == 'POST':
