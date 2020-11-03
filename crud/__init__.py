@@ -33,7 +33,7 @@ class sitemap(db.Model,SerializerMixin):
 @app.route("/")
 def index():
     all_data = sitemap.query.order_by(sitemap.id.desc()).all() # selelct * from sitmemap
-    return render_template("index.html",sitemap = all_data)
+    return render_template("sitemap2.html",sitemap = all_data)
 
 @app.route("/admin")
 def admin():
@@ -69,6 +69,24 @@ def click():
     
     json_list = json.dumps(a,ensure_ascii=False)
     return json_list
+
+@app.route('/urlclick',methods=['GET','POST'])
+def urlclick():
+    uid = request.form['urlid']
+    # uid = 1
+    url = db.session.query(sitemap).filter_by(id = uid).one()
+    a={'url' : url.url}
+    json_url = json.dumps(a)
+    return json_url
+
+@app.route('/desclick',methods=['GET','POST'])
+def desclick():
+    desid = request.form['desid']
+    # desid = 1
+    des = db.session.query(sitemap).filter_by(id = desid).one()
+    a={'title' : des.title , 'describe' : des.describe}
+    json_des = json.dumps(a,ensure_ascii=False)
+    return json_des
 
 @app.route('/update', methods=['GET','POST'])
 def update():
