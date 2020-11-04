@@ -160,6 +160,10 @@
 			@media screen and (max-width: 768px){
 				body{
 					background-image: none;
+					width:600px;
+				}
+				a::before {
+					font-size:12px;
 				}
 				.rounded-list{
 					float: none;
@@ -235,7 +239,7 @@
 				
 				$('.submenu').on('click','li',function(e){ //3depth 출력
 					if($(this).attr("data-loaded")=='yes') {
-					var twoval = $(this).val();
+						var twoval = $(this).val();
 						$.ajax({
 							type:'POST',
 							url:'http://127.0.0.1:5000/click',
@@ -256,8 +260,7 @@
 							}
 						});
 						$(this).attr("data-loaded","no");
-					}
-					else if($(this).attr("data-loaded")=='no'){
+					}else if($(this).attr("data-loaded")=='no'){
 						$(this).find('ol').empty();
 						$(this).attr("data-loaded","yes");
 					}
