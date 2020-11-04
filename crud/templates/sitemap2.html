@@ -200,7 +200,7 @@
 			$(function(){
 				gourl();
 				open();
-				$('.rounded-list>li').on('click',function(){
+				$('.rounded-list>li').on('click',function(){ //2depth 출력
 					var oneval = $(this).val();
 					if($(this).attr("data-loaded")=='yes') {
 						$.ajax({
@@ -232,7 +232,8 @@
 					}
 					return false;
 				});
-				$('.submenu').on('click','li',function(e){
+				
+				$('.submenu').on('click','li',function(e){ //3depth 출력
 					if($(this).attr("data-loaded")=='yes') {
 					var twoval = $(this).val();
 						$.ajax({
@@ -248,7 +249,7 @@
 									a.setAttribute('value',obj[i].id);
 									a.innerHTML = "<a href=''>"+ obj[i].title +
 									"<input class ='gobtn' type = 'button' name = 'urlbtn' value ='이동하기'><input class ='btn' type = 'button' name = 'describebtn' value ='설명보기'></a>";
-									document.getElementById(twoval).appendChild(a);	
+									document.getElementById(twoval).appendChild(a);
 								}
 								open();
 								gourl();
@@ -262,7 +263,7 @@
 					}
 					return false;
 				});
-				function gourl(){
+				function gourl(){ //url 이동
 					$('.gobtn').on('click',function(){
 					var urlid = $(this).parent().parent().val();
 						$.ajax({
@@ -280,7 +281,7 @@
 						return false;
 					});
 				}
-				function open(){
+				function open(){ //팝업창 띄우기
 					$(".btn").on('click',function(){
 						var desid = $(this).parent().parent().val();
 						$.ajax({
@@ -306,18 +307,14 @@
 					});
 					return false;
 				}
-
-				function dele(){
+				function dele(){ // 팝업창 닫기
 					$(".close").click(function(){
 						$("#modal").addClass("out");
 						return false;
 					});
 				}
-		
 			});
-
 		</script>
-
 	</head>
 	<body>
 		<h1 id="title">Zio<span>You</span> SiteMap</h1>
