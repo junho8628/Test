@@ -197,13 +197,11 @@
 
 		<script src="../static/js/jquery-3.5.1.min.js"></script>
 		<script>
-			
 			$(function(){
 				gourl();
 				open();
 				$('.rounded-list>li').on('click',function(){
 					var oneval = $(this).val();
-					
 					if($(this).attr("data-loaded")=='yes') {
 						$.ajax({
 							type:'POST',
@@ -221,7 +219,6 @@
 									"<input class ='gobtn' type = 'button' name = 'urlbtn' value ='이동하기'><input class ='btn' type = 'button' name = 'describebtn' value ='설명보기'></a>"+
 									"<ol class = 'submenu2' id = "+obj[i].id+"> </ol>";
 									document.getElementById('onedepth_'+oneval).appendChild(a);
-									
 								}
 								open();
 								gourl();
@@ -235,7 +232,6 @@
 					}
 					return false;
 				});
-				
 				$('.submenu').on('click','li',function(e){
 					if($(this).attr("data-loaded")=='yes') {
 					var twoval = $(this).val();
@@ -249,10 +245,10 @@
 								var obj = JSON.parse(JSON.stringify(result))
 								for (i=0; i<Object.keys(obj).length; i++) {
 									var a = document.createElement('li');
+									a.setAttribute('value',obj[i].id);
 									a.innerHTML = "<a href=''>"+ obj[i].title +
 									"<input class ='gobtn' type = 'button' name = 'urlbtn' value ='이동하기'><input class ='btn' type = 'button' name = 'describebtn' value ='설명보기'></a>";
-									document.getElementById(twoval).appendChild(a);
-									
+									document.getElementById(twoval).appendChild(a);	
 								}
 								open();
 								gourl();
