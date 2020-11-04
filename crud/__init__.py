@@ -54,7 +54,7 @@ def insertUser():
         db.session.add(inputUser)
         db.session.commit()
 
-        flash(u"db가 성공적으로 등록되었습니다.","success") # 한글은 앞에 u넣기
+        flash(u"db가 성공적으로 등록되었습니다.","success")
 
         return redirect(url_for('index'))   
      
