@@ -160,18 +160,19 @@
 			@media screen and (max-width: 768px){
 				body{
 					background-image: none;
-					width:600px;
-				}
-				a::before {
-					font-size:12px;
+					width:auto;
 				}
 				.rounded-list{
 					float: none;
 					width: auto;
+					padding: 20px;
+				}
+				#title{
+					text-align: center;
 				}
 			}
 			@media (min-width: 640px) {
-				
+
 			}
 			.btn {
 				display: inline-block;
@@ -323,7 +324,7 @@
 		</script>
 	</head>
 	<body>
-		<h1 id="title">Zio<span>You</span> SiteMap</h1>
+		<h1 id="title">Group<span>Ware</span> SiteMap</h1>
 				<ol class="rounded-list">
 					{% for list in sitemap | sort(attribute='sortseq') %}
 					{% if (list.depth) == 1 %}
