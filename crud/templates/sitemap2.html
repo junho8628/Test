@@ -7,7 +7,7 @@
 			body{
 				margin: 40px auto;
 				width: 650px;
-				background-image: url("../static/img/zio.png");
+				/* background-image: url("../static/img/zio.png"); */
 				background-repeat: no-repeat;
 				/*background-size: cover;*/
 			}
@@ -97,7 +97,6 @@
 				z-index: 1;
 			}
 			.submenu2{
-				
 				position:relative;
 				width:95%;
 				height:100%;
@@ -160,11 +159,17 @@
 			@media screen and (max-width: 768px){
 				body{
 					background-image: none;
+					width:auto;
 				}
 				.rounded-list{
 					float: none;
 					width: auto;
+					padding: 20px;
 				}
+				#title{
+					text-align: center;
+				}
+		
 			}
 			.btn {
 				display: inline-block;
@@ -263,6 +268,7 @@
 					}
 					return false;
 				});
+
 				function gourl(){ //url 이동
 					$('.gobtn').on('click',function(){
 					var urlid = $(this).parent().parent().val();
@@ -273,7 +279,7 @@
 								{'urlid' : urlid} ,
 							dataType:'JSON',
 							success:function(result){
-								// alert(result['url']);
+							
 								var basic_url = "https://dev.zioyou.com";
 								window.open(basic_url+result['url'],'newpop');
 							}
@@ -291,13 +297,14 @@
 									{'desid' : desid} ,
 								dataType:'JSON',
 								success:function(result){
-									// alert(result['title']);
+								
 									var a = document.getElementById('desc');
-									a.innerHTML="<h2>"+result['title']+"</h2><p>"+result['describe']+"</p><a href='' class='close close1'>"+
+									a.innerHTML="<h3>"+result['title']+"</h3><p>"+result['describe']+"</p><a href='' class='close close1'>"+
 										"<svg viewBox='0 0 24 24'>"+
 										"<path d='M14.1,12L22,4.1c0.6-0.6,0.6-1.5,0-2.1c-0.6-0.6-1.5-0.6-2.1,0L12,9.9L4.1,2C3.5,1.4,2.5,1.4,2,2C1.4,2.5,1.4,3.5,2,4.1"+
 										"L9.9,12L2,19.9c-0.6,0.6-0.6,1.5,0,2.1c0.3,0.3,0.7,0.4,1.1,0.4s0.8-0.1,1.1-0.4l7.9-7.9l7.9,7.9c0.3,0.3,0.7,0.4,1.1,0.4"+
-										"s0.8-0.1,1.1-0.4c0.6-0.6,0.6-1.5,0-2.1L14.1,12z'/></svg></a>";
+										"s0.8-0.1,1.1-0.4c0.6-0.6,0.6-1.5,0-2.1L14.1,12z'/></svg>"+
+										"</a>";
 									$("#modal").removeAttr("class").addClass("one");
 									dele();
 								}
@@ -313,11 +320,12 @@
 						return false;
 					});
 				}
+
 			});
 		</script>
 	</head>
 	<body>
-		<h1 id="title">Zio<span>You</span> SiteMap</h1>
+		<h1 id="title">Group<span>Ware</span> SiteMap</h1>
 				<ol class="rounded-list">
 					{% for list in sitemap | sort(attribute='sortseq') %}
 					{% if (list.depth) == 1 %}
