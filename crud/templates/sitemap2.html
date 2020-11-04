@@ -249,10 +249,10 @@
 								var obj = JSON.parse(JSON.stringify(result))
 								for (i=0; i<Object.keys(obj).length; i++) {
 									var a = document.createElement('li');
+									a.setAttribute('value',obj[i].id);
 									a.innerHTML = "<a href=''>"+ obj[i].title +
 									"<input class ='gobtn' type = 'button' name = 'urlbtn' value ='이동하기'><input class ='btn' type = 'button' name = 'describebtn' value ='설명보기'></a>";
 									document.getElementById(twoval).appendChild(a);
-									
 								}
 								open();
 								gourl();
