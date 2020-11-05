@@ -225,7 +225,7 @@
 						$(this).find('ol').empty();
 						$(this).attr("data-loaded","yes");
 					}
-					return false;
+					return false; //event.preventDefault();  event.stopPropagation();
 				});
 
 				$('.submenu').on('click','li',function(){ //3depth 출력
@@ -268,7 +268,6 @@
 								{'urlid' : urlid} ,
 							dataType:'JSON',
 							success:function(result){
-								// alert(result['url']);
 								var basic_url = "https://dev.zioyou.com";
 								window.open(basic_url+result['url'],'newpop');
 							}
@@ -276,7 +275,7 @@
 						return false;
 					});
 				}
-				
+
 				function open(){ //팝업창 띄우기
 					$(".btn").on('click',function(){
 						var desid = $(this).parent().parent().val();
@@ -287,7 +286,6 @@
 									{'desid' : desid} ,
 								dataType:'JSON',
 								success:function(result){
-									// alert(result['title']);
 									var a = document.getElementById('desc');
 									a.innerHTML="<h3>"+result['title']+"</h3><p>"+result['describe']+"</p><a href='' class='close close1'>"+
 										"<svg viewBox='0 0 24 24'>"+
