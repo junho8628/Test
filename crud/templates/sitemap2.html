@@ -227,8 +227,8 @@
 					}
 					return false;
 				});
-				
-				$('.submenu').on('click','li',function(e){ //3depth 출력
+
+				$('.submenu').on('click','li',function(){ //3depth 출력
 					if($(this).attr("data-loaded")=='yes') {
 						var twoval = $(this).val();
 						$.ajax({
@@ -257,6 +257,7 @@
 					}
 					return false;
 				});
+
 				function gourl(){ //url 이동
 					$('.gobtn').on('click',function(){
 					var urlid = $(this).parent().parent().val();
@@ -275,6 +276,7 @@
 						return false;
 					});
 				}
+				
 				function open(){ //팝업창 띄우기
 					$(".btn").on('click',function(){
 						var desid = $(this).parent().parent().val();
