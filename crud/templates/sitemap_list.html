@@ -32,8 +32,7 @@
 				padding: .4em .4em .4em 2em;
 				*padding: .4em;
 				margin: .5em 0;
-				/* background:#C0C0C0; */
-				background: #D3D3D3;
+				background:#C0C0C0;
 				color: black;
 				text-decoration: none;
 				-moz-border-radius: .3em;
@@ -61,8 +60,7 @@
 				left: -1.3em;
 				top: 50%;
 				margin-top: -1.3em;
-				/* background:#24e9ed; */
-				background: #33ccff;
+				background: #87ceeb;
 				height: 2em;
 				width: 2em;
 				line-height: 2em;
@@ -88,32 +86,15 @@
 				height:100%;
 				z-index: 1;
 			}
-			.submenu>li>a::before{
-				background-color:#24e9ed;
-			}
-			.submenu li>a{
-				background :#D3D3D3;
-				
-			}
+			.submenu li>a{background :#D3D3D3;}
 			.submenu2{
 				position:relative;
 				width:100%;
 				height:100%;
 				z-index: 1;
-			}
-			.submenu2>li>a::before{
-				background-color: #33ccff;
-			}
-			.submenu2>li{
-				display:block;
-			}
-			.submenu2 li>a{
-				background:rgb(230,230,230);
-			}
-			span {
-				color:black;
-			}
-			
+				}
+			.submenu2 li>a{background:rgb(230,230,230);}
+			span {color:black}
 
 			/* modal */
 			#modal {position: fixed; left:0; top:0; width: 100%; height: 100%; transform: scale(0); z-index: 1;}
@@ -244,7 +225,7 @@
 						$(this).find('ol').empty();
 						$(this).attr("data-loaded","yes");
 					}
-					return false;
+					return false; //event.preventDefault();  event.stopPropagation();
 				});
 
 				$('.submenu').on('click','li',function(){ //3depth 출력
@@ -287,7 +268,6 @@
 								{'urlid' : urlid} ,
 							dataType:'JSON',
 							success:function(result){
-								// alert(result['url']);
 								var basic_url = "https://dev.zioyou.com";
 								window.open(basic_url+result['url'],'newpop');
 							}
@@ -295,7 +275,7 @@
 						return false;
 					});
 				}
-				
+
 				function open(){ //팝업창 띄우기
 					$(".btn").on('click',function(){
 						var desid = $(this).parent().parent().val();
@@ -306,7 +286,6 @@
 									{'desid' : desid} ,
 								dataType:'JSON',
 								success:function(result){
-									// alert(result['title']);
 									var a = document.getElementById('desc');
 									a.innerHTML="<h3>"+result['title']+"</h3><p>"+result['describe']+"</p><a href='' class='close close1'>"+
 										"<svg viewBox='0 0 24 24'>"+
@@ -317,7 +296,6 @@
 									dele();
 								}
 							});
-							
 						return false;
 					});
 					return false;
@@ -350,7 +328,7 @@
 						<div class="modal-cont" id ="desc">
 							
 							<a href="" class="close close1">
-								
+					
 							</a>
 						</div>
 					</div>

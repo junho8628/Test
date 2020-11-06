@@ -30,12 +30,12 @@ class sitemap(db.Model):
 @app.route("/")
 def index():
     all_data = sitemap.query.order_by(sitemap.id.desc()).all() # selelct * from sitmemap
-    return render_template("sitemap2.html",sitemap = all_data)
+    return render_template("sitemap_list.html",sitemap = all_data)
 
 @app.route("/admin")
 def admin():
     all_data = sitemap.query.order_by(sitemap.id.desc()).all() # selelct * from sitmemap
-    return render_template("index.html",sitemap = all_data)
+    return render_template("admin.html",sitemap = all_data)
 
 @app.route("/insert",methods=['POST'])
 def insertUser():
@@ -53,7 +53,7 @@ def insertUser():
 
         flash(u"db가 성공적으로 등록되었습니다.","success")
 
-        return redirect(url_for('index'))   
+        return redirect(url_for('admin'))   
      
 @app.route('/click',methods=['GET','POST'])
 def click():
@@ -64,7 +64,7 @@ def click():
     for i in li :
         a.append({'title' : i.title, 'id' : i.id})
     
-    json_list = json.dumps(a,ensure_ascii=False)
+    json_list = json.dumps(a,ensure_ascii=False) #한글 깨짐 방지
     return json_list
 
 @app.route('/urlclick',methods=['GET','POST'])
@@ -101,7 +101,7 @@ def update():
         flash(u"db가 성공적으로 수정되었습니다.","success")
         flash(u"수고하셨습니다.","success")
 
-        return redirect(url_for('index'))
+        return redirect(url_for('admin'))
 
 @app.route('/delete/<id>', methods=['GET','POST'])
 def delete(id):
@@ -109,7 +109,4 @@ def delete(id):
     db.session.delete(deleteUser)
     db.session.commit()
     flash(u"db가 성공적으로 삭제되었습니다.","success")
-    return redirect(url_for('index'))
-
-if __name__ == "__main__":
-    app.run()
+    return redirect(url_for('admin'))
