@@ -143,8 +143,6 @@
 				0% {transform: scale(1);}
 				100% {transform: scale(0); }
 			}
-
-			
 			@media (min-width:360px) and (max-width: 780px){
 				body{
 					background-image: none;
@@ -193,8 +191,6 @@
 		<script src="../static/js/jquery-3.5.1.min.js"></script>
 		<script>
 			$(function(){
-				gourl();
-				open();
 				$('.rounded-list>li').on('click',function(){ //2depth 출력
 					var oneval = $(this).val();
 					if($(this).attr("data-loaded")=='yes') {
@@ -215,7 +211,6 @@
 									"<ol class = 'submenu2' id = "+obj[i].id+"> </ol>";
 									document.getElementById('onedepth_'+oneval).appendChild(a);
 								}
-								gourl();
 							}
 						});
 						$(this).attr("data-loaded","no");
@@ -245,7 +240,6 @@
 									"<input class ='gobtn' type = 'button' name = 'urlbtn' value ='이동'><input class ='btn' type = 'button' name = 'describebtn' value ='설명'></a>";
 									document.getElementById(twoval).appendChild(a);
 								}
-								gourl();
 							}
 						});
 						$(this).attr("data-loaded","no");
@@ -255,10 +249,19 @@
 					}
 					return false;
 				});
-				function gourl(){ //url 이동
-					$('.gobtn').on('click',function(){
+				//url 이동
+				$('.gobtn').on('click',function(){
+				var urlid = $(this).parent().parent().val();
+					go_url(urlid);
+					return false;
+				});
+				$(".submenu").on('click','.gobtn',function(){
 					var urlid = $(this).parent().parent().val();
-						$.ajax({
+					go_url(urlid);
+					return false;
+				});
+				function go_url(urlid){
+					$.ajax({
 							type:'POST',
 							url:'http://127.0.0.1:5000/urlclick',
 							data : 
@@ -269,71 +272,45 @@
 								window.open(basic_url+result['url'],'newpop');
 							}
 						});
-						return false;
-					});
-				}
-					$(".submenu").on('click','.btn',function(){
-						var desid = $(this).parent().parent().val();
-						// console.log(desid);
-						// return false;
-						$.ajax({
-								type:'POST',
-								url:'http://127.0.0.1:5000/desclick',
-								data : 
-									{'desid' : desid} ,
-								dataType:'JSON',
-								success:function(result){
-									var a = document.getElementById('desc');
-									a.innerHTML="<h3>"+result['title']+"</h3><p>"+result['describe']+"</p><a href='' class='close close1'>"+
-										"<svg viewBox='0 0 24 24'>"+
-										"<path d='M14.1,12L22,4.1c0.6-0.6,0.6-1.5,0-2.1c-0.6-0.6-1.5-0.6-2.1,0L12,9.9L4.1,2C3.5,1.4,2.5,1.4,2,2C1.4,2.5,1.4,3.5,2,4.1"+
-										"L9.9,12L2,19.9c-0.6,0.6-0.6,1.5,0,2.1c0.3,0.3,0.7,0.4,1.1,0.4s0.8-0.1,1.1-0.4l7.9-7.9l7.9,7.9c0.3,0.3,0.7,0.4,1.1,0.4"+
-										"s0.8-0.1,1.1-0.4c0.6-0.6,0.6-1.5,0-2.1L14.1,12z'/></svg></a>";
-									$("#modal").removeAttr("class").addClass("one");
-									dele();
-								}
-							});
-						return false;
-					});
-					return false;
-			
-				function open(){
-					$(".btn").on('click',function(){
-						var desid = $(this).parent().parent().val();
-						// console.log(desid);
-						// return false;
-						$.ajax({
-								type:'POST',
-								url:'http://127.0.0.1:5000/desclick',
-								data : 
-									{'desid' : desid} ,
-								dataType:'JSON',
-								success:function(result){
-									var a = document.getElementById('desc');
-									a.innerHTML="<h3>"+result['title']+"</h3><p>"+result['describe']+"</p><a href='' class='close close1'>"+
-										"<svg viewBox='0 0 24 24'>"+
-										"<path d='M14.1,12L22,4.1c0.6-0.6,0.6-1.5,0-2.1c-0.6-0.6-1.5-0.6-2.1,0L12,9.9L4.1,2C3.5,1.4,2.5,1.4,2,2C1.4,2.5,1.4,3.5,2,4.1"+
-										"L9.9,12L2,19.9c-0.6,0.6-0.6,1.5,0,2.1c0.3,0.3,0.7,0.4,1.1,0.4s0.8-0.1,1.1-0.4l7.9-7.9l7.9,7.9c0.3,0.3,0.7,0.4,1.1,0.4"+
-										"s0.8-0.1,1.1-0.4c0.6-0.6,0.6-1.5,0-2.1L14.1,12z'/></svg></a>";
-									$("#modal").removeAttr("class").addClass("one");
-									dele();
-								}
-							});
-						return false;
-					});
-					return false;
 				}
 
-				function dele(){ // 팝업창 닫기
+				// 팝업창 띄우기
+				$(".submenu").on('click','.btn',function(){
+					var desid = $(this).parent().parent().val();
+					open(desid);
+					return false;
+				});
+				$(".btn").on('click',function(){
+					var desid = $(this).parent().parent().val();
+					open(desid);
+					return false;
+				})
+				function open(desid){ 
+					$.ajax({
+						type:'POST',
+						url:'http://127.0.0.1:5000/desclick',
+						data : 
+							{'desid' : desid} ,
+						dataType:'JSON',
+						success:function(result){
+							var a = document.getElementById('desc');
+							a.innerHTML="<h3>"+result['title']+"</h3><p>"+result['describe']+"</p><a href='' class='close close1'>"+
+								"<svg viewBox='0 0 24 24'>"+
+								"<path d='M14.1,12L22,4.1c0.6-0.6,0.6-1.5,0-2.1c-0.6-0.6-1.5-0.6-2.1,0L12,9.9L4.1,2C3.5,1.4,2.5,1.4,2,2C1.4,2.5,1.4,3.5,2,4.1"+
+								"L9.9,12L2,19.9c-0.6,0.6-0.6,1.5,0,2.1c0.3,0.3,0.7,0.4,1.1,0.4s0.8-0.1,1.1-0.4l7.9-7.9l7.9,7.9c0.3,0.3,0.7,0.4,1.1,0.4"+
+								"s0.8-0.1,1.1-0.4c0.6-0.6,0.6-1.5,0-2.1L14.1,12z'/></svg></a>";
+							$("#modal").removeAttr("class").addClass("one");
+							dele();
+						}
+					})
+				}
+ 				// 팝업창 닫기
+				function dele(){
 					$(".close").click(function(){
 						$("#modal").addClass("out");
 						return false;
 					});
 				}
-			
-
-
-
 			});
 		</script>
 	</head>
