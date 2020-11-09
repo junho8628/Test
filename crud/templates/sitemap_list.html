@@ -193,7 +193,8 @@
 		<script src="../static/js/jquery-3.5.1.min.js"></script>
 		<script>
 			$(function(){
-				$('.rounded-list>li').on('click',function(){ //2depth 출력
+				//2depth 출력
+				$('.rounded-list>li').on('click',function(){ 
 					var oneval = $(this).val();
 					if($(this).attr("data-loaded")=='yes') {
 						$.ajax({
@@ -223,8 +224,8 @@
 					}
 					return false; //event.preventDefault();  event.stopPropagation();
 				});
-
-				$('.submenu').on('click','li',function(){ //3depth 출력
+				 //3depth 출력
+				$('.submenu').on('click','li',function(){
 					if($(this).attr("data-loaded")=='yes') {
 						var twoval = $(this).val();
 						$.ajax({
@@ -318,26 +319,26 @@
 	</head>
 	<body>
 		<h1 id="title">Group<span>Ware</span> SiteMap</h1>
-				<ol class="rounded-list">
-					{% for list in sitemap | sort(attribute='sortseq') %}
-					{% if (list.depth) == 1 %}
-					<li value = "{{list.id}}" data-loaded="yes"><a href="">{{list.title}}
-						<input class ="gobtn" type = "button" name = "urlbtn" value ="이동">
-						<input class ="btn" type = "button" name = "describebtn" value ="설명"></a>
-						<ol class ='submenu' id = "onedepth_{{list.id}}"></ol>
-					</li>
-					{% endif %}
-					{% endfor %}
-				</ol>
-				<!-- 팝업창시작 -->
-				<div id="modal">
-					<div class="modal-bg">
-						<div class="modal-cont" id ="desc">	
-							<a href="" class="close close1">
-							</a>
-						</div>
-					</div>
+		<ol class="rounded-list">
+			{% for list in sitemap | sort(attribute='sortseq') %}
+			{% if (list.depth) == 1 %}
+			<li value = "{{list.id}}" data-loaded="yes"><a href="">{{list.title}}
+				<input class ="gobtn" type = "button" name = "urlbtn" value ="이동">
+				<input class ="btn" type = "button" name = "describebtn" value ="설명"></a>
+				<ol class ='submenu' id = "onedepth_{{list.id}}"></ol>
+			</li>
+			{% endif %}
+			{% endfor %}
+		</ol>
+		<!-- 팝업창시작 -->
+		<div id="modal">
+			<div class="modal-bg">
+				<div class="modal-cont" id ="desc">	
+					<a href="" class="close close1">
+					</a>
 				</div>
-				<!-- 팝업창 종료 -->
+			</div>
+		</div>
+		<!-- 팝업창 종료 -->
 	</body>
 </html>
