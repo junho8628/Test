@@ -251,11 +251,19 @@
 					}
 					return false;
 				});
-
-				function gourl(){ //url 이동
-					$('.gobtn').on('click',function(){
+				//url 이동
+				$('.gobtn').on('click',function(){
+				var urlid = $(this).parent().parent().val();
+					go_url(urlid);
+					return false;
+				});
+				$(".submenu").on('click','.gobtn',function(){
 					var urlid = $(this).parent().parent().val();
-						$.ajax({
+					go_url(urlid);
+					return false;
+				});
+				function go_url(urlid){
+					$.ajax({
 							type:'POST',
 							url:'http://127.0.0.1:5000/urlclick',
 							data : 
@@ -266,42 +274,40 @@
 								window.open(basic_url+result['url'],'newpop');
 							}
 						});
-						return false;
-					});
 				}
 
-				//팝업창 띄우기
-					$('.submene, .submenu2').on('click','.btn',function(){
-						var desid = $(this).parent().parent().val(); //console.log(desid); return false;
-						open(desid);
-						return false;
-					});
-					$('.btn').on('click',function(){
-						var desid = $(this).parent().parent().val();
-						open(desid);
-						return false;
-					});
-				function open(desid){
-						$.ajax({
-								type:'POST',
-								url:'http://127.0.0.1:5000/desclick',
-								data : 
-									{'desid' : desid} ,
-								dataType:'JSON',
-								success:function(result){
-									var a = document.getElementById('desc');
-									a.innerHTML="<h3>"+result['title']+"</h3><p>"+result['describe']+"</p><a href='' class='close close1'>"+
-										"<svg viewBox='0 0 24 24'>"+
-										"<path d='M14.1,12L22,4.1c0.6-0.6,0.6-1.5,0-2.1c-0.6-0.6-1.5-0.6-2.1,0L12,9.9L4.1,2C3.5,1.4,2.5,1.4,2,2C1.4,2.5,1.4,3.5,2,4.1"+
-										"L9.9,12L2,19.9c-0.6,0.6-0.6,1.5,0,2.1c0.3,0.3,0.7,0.4,1.1,0.4s0.8-0.1,1.1-0.4l7.9-7.9l7.9,7.9c0.3,0.3,0.7,0.4,1.1,0.4"+
-										"s0.8-0.1,1.1-0.4c0.6-0.6,0.6-1.5,0-2.1L14.1,12z'/></svg></a>";
-									$("#modal").removeAttr("class").addClass("one");
-									dele();
-								}
-							});
-						return false;
+				// 팝업창 띄우기
+				$(".submenu").on('click','.btn',function(){
+					var desid = $(this).parent().parent().val();
+					open(desid);
+					return false;
+				});
+				$(".btn").on('click',function(){
+					var desid = $(this).parent().parent().val();
+					open(desid);
+					return false;
+				})
+				function open(desid){ 
+					$.ajax({
+						type:'POST',
+						url:'http://127.0.0.1:5000/desclick',
+						data : 
+							{'desid' : desid} ,
+						dataType:'JSON',
+						success:function(result){
+							var a = document.getElementById('desc');
+							a.innerHTML="<h3>"+result['title']+"</h3><p>"+result['describe']+"</p><a href='' class='close close1'>"+
+								"<svg viewBox='0 0 24 24'>"+
+								"<path d='M14.1,12L22,4.1c0.6-0.6,0.6-1.5,0-2.1c-0.6-0.6-1.5-0.6-2.1,0L12,9.9L4.1,2C3.5,1.4,2.5,1.4,2,2C1.4,2.5,1.4,3.5,2,4.1"+
+								"L9.9,12L2,19.9c-0.6,0.6-0.6,1.5,0,2.1c0.3,0.3,0.7,0.4,1.1,0.4s0.8-0.1,1.1-0.4l7.9-7.9l7.9,7.9c0.3,0.3,0.7,0.4,1.1,0.4"+
+								"s0.8-0.1,1.1-0.4c0.6-0.6,0.6-1.5,0-2.1L14.1,12z'/></svg></a>";
+							$("#modal").removeAttr("class").addClass("one");
+							dele();
+						}
+					})
 				}
-				function dele(){ // 팝업창 닫기
+ 				// 팝업창 닫기
+				function dele(){
 					$(".close").click(function(){
 						$("#modal").addClass("out");
 						return false;
@@ -312,26 +318,26 @@
 	</head>
 	<body>
 		<h1 id="title">Group<span>Ware</span> SiteMap</h1>
-			<ol class="rounded-list">
-				{% for list in sitemap | sort(attribute='sortseq') %}
-				{% if (list.depth) == 1 %}
-				<li value = "{{list.id}}" data-loaded="yes"><a href="">{{list.title}}
-					<input class ="gobtn" type = "button" name = "urlbtn" value ="이동">
-					<input class ="btn" type = "button" name = "describebtn" value ="설명"></a>
-					<ol class ='submenu' id = "onedepth_{{list.id}}"></ol>
-				</li>
-				{% endif %}
-				{% endfor %}
-			</ol>
-			<!-- 팝업창시작 -->
-			<div id="modal">
-				<div class="modal-bg">
-					<div class="modal-cont" id ="desc">
-						<a href="" class="close close1">
-						</a>
+				<ol class="rounded-list">
+					{% for list in sitemap | sort(attribute='sortseq') %}
+					{% if (list.depth) == 1 %}
+					<li value = "{{list.id}}" data-loaded="yes"><a href="">{{list.title}}
+						<input class ="gobtn" type = "button" name = "urlbtn" value ="이동">
+						<input class ="btn" type = "button" name = "describebtn" value ="설명"></a>
+						<ol class ='submenu' id = "onedepth_{{list.id}}"></ol>
+					</li>
+					{% endif %}
+					{% endfor %}
+				</ol>
+				<!-- 팝업창시작 -->
+				<div id="modal">
+					<div class="modal-bg">
+						<div class="modal-cont" id ="desc">	
+							<a href="" class="close close1">
+							</a>
+						</div>
 					</div>
 				</div>
-			</div>
-			<!-- 팝업창 종료 -->
-	</body>	
+				<!-- 팝업창 종료 -->
+	</body>
 </html>
