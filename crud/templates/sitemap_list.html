@@ -161,7 +161,7 @@
 					text-align: center;
 				}
 			}
-			.btn {
+			.openbtn {
 				display: inline-block;
 				border-radius:10px 10px 10px 10px;
 				border : 1px solid skyblue;
@@ -181,7 +181,7 @@
 				margin-left:3px;
 				cursor :pointer;
 			}
-			.btn:hover{
+			.openbtn:hover{
 				background-color:white;
 			}
 			.gobtn:hover{
@@ -194,7 +194,7 @@
 		<script>
 			$(function(){
 				//2depth 출력
-				$('.rounded-list>li').on('click',function(){ 
+				$(document).on('click','.rounded-list>li',function(){ 
 					var oneval = $(this).val();
 					if($(this).attr("data-loaded")=='yes') {
 						$.ajax({
@@ -210,7 +210,7 @@
 									a.setAttribute('value',obj[i].id);
 									a.setAttribute('data-loaded','yes');
 									a.innerHTML = "<a href=''>"+ obj[i].title +
-									"<input class ='gobtn' type = 'button' name = 'urlbtn' value ='이동'><input class ='btn' type = 'button' name = 'describebtn' value ='설명'></a>"+
+									"<input class ='gobtn' type = 'button' name = 'urlbtn' value ='이동'><input class ='openbtn' type = 'button' name = 'describebtn' value ='설명'></a>"+
 									"<ol class = 'submenu2' id = "+obj[i].id+"> </ol>";
 									document.getElementById('onedepth_'+oneval).appendChild(a);
 								}
@@ -225,7 +225,7 @@
 					return false; //event.preventDefault();  event.stopPropagation();
 				});
 				 //3depth 출력
-				$('.submenu').on('click','li',function(){
+				$(document).on('click','.submenu>li',function(){
 					if($(this).attr("data-loaded")=='yes') {
 						var twoval = $(this).val();
 						$.ajax({
@@ -240,7 +240,7 @@
 									var a = document.createElement('li');
 									a.setAttribute('value',obj[i].id);
 									a.innerHTML = "<a href=''>"+ obj[i].title +
-									"<input class ='gobtn' type = 'button' name = 'urlbtn' value ='이동'><input class ='btn' type = 'button' name = 'describebtn' value ='설명'></a>";
+									"<input class ='gobtn' type = 'button' name = 'urlbtn' value ='이동'><input class ='openbtn' type = 'button' name = 'describebtn' value ='설명'></a>";
 									document.getElementById(twoval).appendChild(a);
 								}
 							}
@@ -253,16 +253,18 @@
 					return false;
 				});
 				//url 이동
-				$('.gobtn').on('click',function(){
-				var urlid = $(this).parent().parent().val();
-					go_url(urlid);
-					return false;
-				});
-				$(".submenu").on('click','.gobtn',function(){
+				$(document).on('click','.gobtn',function(){
 					var urlid = $(this).parent().parent().val();
 					go_url(urlid);
 					return false;
 				});
+				// 팝업창 띄우기
+				$(document).on('click','.openbtn',function(){
+					var desid = $(this).parent().parent().val();
+					open(desid);
+					return false;
+				});
+				//url 함수
 				function go_url(urlid){
 					$.ajax({
 							type:'POST',
@@ -276,17 +278,7 @@
 							}
 						});
 				}
-				// 팝업창 띄우기
-				$(".submenu").on('click','.btn',function(){
-					var desid = $(this).parent().parent().val();
-					open(desid);
-					return false;
-				});
-				$(".btn").on('click',function(){
-					var desid = $(this).parent().parent().val();
-					open(desid);
-					return false;
-				})
+				//팝업창 함수
 				function open(desid){ 
 					$.ajax({
 						type:'POST',
@@ -323,7 +315,7 @@
 			{% if (list.depth) == 1 %}
 			<li value = "{{list.id}}" data-loaded="yes"><a href="">{{list.title}}
 				<input class ="gobtn" type = "button" name = "urlbtn" value ="이동">
-				<input class ="btn" type = "button" name = "describebtn" value ="설명"></a>
+				<input class ="openbtn" type = "button" name = "describebtn" value ="설명"></a>
 				<ol class ='submenu' id = "onedepth_{{list.id}}"></ol>
 			</li>
 			{% endif %}
