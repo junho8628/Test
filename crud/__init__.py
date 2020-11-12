@@ -7,8 +7,6 @@ app = Flask(__name__)
 app.secret_key = "Secret Key"
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///sitemap.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-
-
 db = SQLAlchemy(app)
 
 class sitemap(db.Model):
@@ -44,20 +42,21 @@ def search():
     # searchtxt = '메인 화면'
     searchtxt=searchtxt.split() #지오유 그룹웨어 > [지오유,그룹웨어]
     find = []
-    # for txt in searchtxt :
-    #     search_db = sitemap.query.filter(sitemap.title.contains(txt)).all()
-    #     for result in search_db :
-    #         find.append({'title' : result.title , 'id' : result.id})
-    # search_result = json.dumps(find,ensure_ascii=False) #한글 깨짐 방지          
-
-    a=''
     for txt in searchtxt :
-        a += "sitemap.title=='"+txt+"',"
-    b=a.rstrip(',')
-    exam = sitemap.query.filter(and_(b)).all()
-    for text in exam :
-        find.append({'title' : text.title , 'id' : text.id})
-    search_result = json.dumps(find,ensure_ascii=False) #한글 깨짐 방지
+        search_db = sitemap.query.filter(sitemap.title.contains(txt)).all()
+        for result in search_db :
+            find.append({'title' : result.title , 'id' : result.id})
+    search_result = json.dumps(find,ensure_ascii=False) #한글 깨짐 방지          
+
+    # a=''
+    # for txt in searchtxt :
+    #     a += "sitemap.title=='"+txt+"',"
+    # b=a.rstrip(',')
+    # exam = sitemap.query.filter(and_(b)).all()
+    # for text in exam :
+    #     find.append({'title' : text.title , 'id' : text.id})
+    # search_result = json.dumps(find,ensure_ascii=False) #한글 깨짐 방지
+
     return search_result
 
 @app.route("/insert",methods=['POST'])
@@ -81,19 +80,16 @@ def insertUser():
 @app.route('/click',methods=['GET','POST'])
 def click():
     value = request.form['pid']
-    # value = 19
     li = db.session.query(sitemap).filter_by(pid=value).order_by(sitemap.sortseq).all()
     a=[]
     for i in li :
         a.append({'title' : i.title, 'id' : i.id})
-    
     json_list = json.dumps(a,ensure_ascii=False) #한글 깨짐 방지
     return json_list
 
 @app.route('/urlclick',methods=['GET','POST'])
 def urlclick():
     uid = request.form['urlid']
-    # uid = 1
     url = db.session.query(sitemap).filter_by(id = uid).one()
     a={'url' : url.url}
     json_url = json.dumps(a)
@@ -102,7 +98,6 @@ def urlclick():
 @app.route('/desclick',methods=['GET','POST'])
 def desclick():
     desid = request.form['desid']
-    # desid = 1
     des = db.session.query(sitemap).filter_by(id = desid).one()
     a={'title' : des.title , 'describe' : des.describe}
     json_des = json.dumps(a,ensure_ascii=False)
