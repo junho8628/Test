@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from flask import Flask, render_template, request,redirect, url_for, flash,jsonify
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import and_
 import json
 app = Flask(__name__)
 app.secret_key = "Secret Key"
@@ -36,6 +37,73 @@ def index():
 def admin():
     all_data = sitemap.query.order_by(sitemap.id.desc()).all() # selelct * from sitmemap
     return render_template("admin.html",sitemap = all_data)
+
+@app.route("/search",methods=['POST','GET'])
+def search():
+    searchtxt = request.form['search_text']
+    # searchtxt = '메인 화면'
+    search_txt1=searchtxt.split()[0]
+    search_txt2=searchtxt.split()[1]
+    search_txt1_db=db.session.query(sitemap).filter(sitemap.title.contains(search_txt1)).all()
+    searcht_txt2_db=db.session.query(sitemap).filter(sitemap.title.contains(search_txt2)).all()
+    # exam =db.session.query(sitemap).filter(and_(sitemap.title=='searchtxt1',sitemap.title=='searchtxt2')).all()
+
+    c=[]
+    # for i in searchtxt3 :
+    #     a.append({'title' : i.title, 'id' : i.id})
+    
+    # for j in searchtxt4:
+    #     b.append({'title' : j.title, 'id' : j.id})
+
+    # exam =db.session.query(sitemap).filter(and_(sitemap.title==a.title,sitemap.title==b.title)).all()
+    # for k in exam:
+    #     c.append({'title' : k.title, 'id' : k.id})
+
+    for i in search_txt1_db : #9
+        for j in searcht_txt2_db :#5
+            exam =db.session.query(sitemap).filter(and_(sitemap.id==i.id , sitemap.id==j.id)).all()
+            for k in exam:
+                c.append({'title' : k.title, 'id' : k.id})
+
+
+
+             
+    # exam =db.session.query(sitemap).filter(and_(sitemap.title==a,sitemap.title==b)).all()
+    # for i in exam:
+    #     a.append({'title' : i.title, 'id' : i.id})
+    # c=[]
+    # exam=[]
+    # for i in searchtxt :
+    #     b=db.session.query(sitemap).filter(sitemap.title.contains(i)).all()
+    #     for j in b:
+    #         c.append({'title' : j.title, 'id' : j.id})
+    # for k in searchtxt1:
+    #     d=db.session.query(sitemap).filter(sitemap.title.contains(i)).all()
+    #     for o in d:
+    #         e.append({'title' : o.title, 'id' : o.id})
+    # exam = sitemap.query.filter(and_(sitemap.title=='c',sitemap.title=='e')).all()
+    
+    
+    json_list = json.dumps(c,ensure_ascii=False)
+
+    # searchtxt = '메인 화면'
+    # searchtxt=searchtxt.split() #지오유 그룹웨어 > [지오유,그룹웨어]
+    # find = []
+    # for txt in searchtxt :
+    #     search_db = sitemap.query.filter(sitemap.title.contains(txt)).all()
+    #     for result in search_db :
+    #         find.append({'title' : result.title , 'id' : result.id})
+    # search_result = json.dumps(find,ensure_ascii=False) #한글 깨짐 방지          
+
+    # a=''
+    # for txt in searchtxt :
+    #     a += "sitemap.title=='"+txt+"',"
+    # b=a.rstrip(',')
+    # exam = sitemap.query.filter(and_(b)).all()
+    # for text in exam :
+    #     find.append({'title' : text.title , 'id' : text.id})
+    # search_result = json.dumps(find,ensure_ascii=False) #한글 깨짐 방지
+    return json_list
 
 @app.route("/insert",methods=['POST'])
 def insertUser():
