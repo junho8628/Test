@@ -215,13 +215,13 @@
 							success:function(result){
 								var obj = JSON.parse(JSON.stringify(result))
 								for (i=0; i<Object.keys(obj).length; i++) {
-									var a = document.createElement('li');
-									a.setAttribute('value',obj[i].id);
-									a.setAttribute('data-loaded','yes');
-									a.innerHTML = "<a href=''>"+ obj[i].title +
+									var list_two = document.createElement('li');
+									list_two.setAttribute('value',obj[i].id);
+									list_two.setAttribute('data-loaded','yes');
+									list_two.innerHTML = "<a href=''>"+ obj[i].title +
 									"<input class ='gobtn' type = 'button' name = 'urlbtn' value ='이동'><input class ='openbtn' type = 'button' name = 'describebtn' value ='설명'></a>"+
 									"<ol class = 'submenu2' id = "+obj[i].id+"> </ol>";
-									document.getElementById('onedepth_'+oneval).appendChild(a);
+									document.getElementById('onedepth_'+oneval).appendChild(list_two);
 								}
 							}
 						});
@@ -246,11 +246,11 @@
 							success:function(result){
 								var obj = JSON.parse(JSON.stringify(result))
 								for (i=0; i<Object.keys(obj).length; i++) {
-									var a = document.createElement('li');
-									a.setAttribute('value',obj[i].id);
-									a.innerHTML = "<a href=''>"+ obj[i].title +
+									var list_three = document.createElement('li');
+									list_three.setAttribute('value',obj[i].id);
+									list_three.innerHTML = "<a href=''>"+ obj[i].title +
 									"<input class ='gobtn' type = 'button' name = 'urlbtn' value ='이동'><input class ='openbtn' type = 'button' name = 'describebtn' value ='설명'></a>";
-									document.getElementById(twoval).appendChild(a);
+									document.getElementById(twoval).appendChild(list_three);
 								}
 							}
 						});

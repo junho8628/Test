@@ -38,26 +38,23 @@ def admin():
 
 @app.route("/search",methods=['POST','GET'])
 def search():
-    searchtxt = request.form['search_text']
-    # searchtxt = '메인 화면'
-    searchtxt=searchtxt.split() #지오유 그룹웨어 > [지오유,그룹웨어]
-    find = []
-    for txt in searchtxt :
-        search_db = sitemap.query.filter(sitemap.title.contains(txt)).all()
-        for result in search_db :
-            find.append({'title' : result.title , 'id' : result.id})
-    search_result = json.dumps(find,ensure_ascii=False) #한글 깨짐 방지          
+    # searchtxt = request.form['search_text']
+    searchtxt = '메인 화면'
+    list_txt = searchtxt.split()
+    for num in range(len(list_txt)) :
+        globals()['search_txt{}'.format(num)] = searchtxt.split()[num]
+        globals()['search_txt_db{}'.format(num)] = db.session.query(sitemap).filter(sitemap.title.contains(globals()['search_txt{}'.format(num)])).all()
+    result=[]
 
-    # a=''
-    # for txt in searchtxt :
-    #     a += "sitemap.title=='"+txt+"',"
-    # b=a.rstrip(',')
-    # exam = sitemap.query.filter(and_(b)).all()
-    # for text in exam :
-    #     find.append({'title' : text.title , 'id' : text.id})
-    # search_result = json.dumps(find,ensure_ascii=False) #한글 깨짐 방지
+    for i in search_txt_db0 :
+        for j in search_txt_db1 :
+            exam =db.session.query(sitemap).filter(and_(sitemap.id==i.id , sitemap.id==j.id)).all()
+            for k in exam:
+                result.append({'title' : k.title, 'id' : k.id})
 
-    return search_result
+    json_list = json.dumps(result,ensure_ascii=False)
+
+    return json_list
 
 @app.route("/insert",methods=['POST'])
 def insertUser():
@@ -102,7 +99,7 @@ def desclick():
     a={'title' : des.title , 'describe' : des.describe}
     json_des = json.dumps(a,ensure_ascii=False)
     return json_des
-
+    
 @app.route('/update', methods=['GET','POST'])
 def update():
     if request.method == 'POST':
