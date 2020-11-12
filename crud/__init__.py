@@ -84,7 +84,7 @@ def desclick():
     a={'title' : des.title , 'describe' : des.describe}
     json_des = json.dumps(a,ensure_ascii=False)
     return json_des
-
+    
 @app.route('/update', methods=['GET','POST'])
 def update():
     if request.method == 'POST':
