@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from flask import Flask, render_template, request,redirect, url_for, flash,jsonify
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import and_
 import json
 app = Flask(__name__)
 app.secret_key = "Secret Key"
@@ -36,6 +37,28 @@ def index():
 def admin():
     all_data = sitemap.query.order_by(sitemap.id.desc()).all() # selelct * from sitmemap
     return render_template("admin.html",sitemap = all_data)
+
+@app.route("/search",methods=['POST','GET'])
+def search():
+    searchtxt = request.form['search_text']
+    # searchtxt = '메인 화면'
+    searchtxt=searchtxt.split() #지오유 그룹웨어 > [지오유,그룹웨어]
+    find = []
+    # for txt in searchtxt :
+    #     search_db = sitemap.query.filter(sitemap.title.contains(txt)).all()
+    #     for result in search_db :
+    #         find.append({'title' : result.title , 'id' : result.id})
+    # search_result = json.dumps(find,ensure_ascii=False) #한글 깨짐 방지          
+
+    a=''
+    for txt in searchtxt :
+        a += "sitemap.title=='"+txt+"',"
+    b=a.rstrip(',')
+    exam = sitemap.query.filter(and_(b)).all()
+    for text in exam :
+        find.append({'title' : text.title , 'id' : text.id})
+    search_result = json.dumps(find,ensure_ascii=False) #한글 깨짐 방지
+    return search_result
 
 @app.route("/insert",methods=['POST'])
 def insertUser():
