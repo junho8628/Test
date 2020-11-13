@@ -7,8 +7,6 @@ app = Flask(__name__)
 app.secret_key = "Secret Key"
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///sitemap.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-
-
 db = SQLAlchemy(app)
 
 class sitemap(db.Model):
@@ -40,25 +38,28 @@ def admin():
 
 @app.route("/search",methods=['POST','GET'])
 def search():
-    searchtxt = request.form['search_text']
+    searchtxt = request.form['txtsearch']
     # searchtxt = '메인 화면'
-    search_txt1=searchtxt.split()[0]
-    search_txt2=searchtxt.split()[1]
-    search_txt1_db=db.session.query(sitemap).filter(sitemap.title.contains(search_txt1)).all()
-    search_txt2_db=db.session.query(sitemap).filter(sitemap.title.contains(search_txt2)).all()
-    # exam =db.session.query(sitemap).filter(and_(sitemap.title=='searchtxt1',sitemap.title=='searchtxt2')).all()
+    list_txt=searchtxt.split()
+    result=[]
+    if len(list_txt) == 1 :
+        search_db = db.session.query(sitemap).filter(sitemap.title.contains(searchtxt)).all()
+        for i in search_db :
+            result.append({'title' : i.title, 'id' : i.id})
 
-    c=[]
+    elif len(list_txt) > 1 :
+        for num in range(len(list_txt)) :
+            globals()['search_txt{}'.format(num)] = searchtxt.split()[num]
+            globals()['search_txt_db{}'.format(num)] = db.session.query(sitemap).filter(sitemap.title.contains(globals()['search_txt{}'.format(num)])).all()
+        
+        for i in search_txt_db0 :
+            for j in search_txt_db1 :
+                exam =db.session.query(sitemap).filter(and_(sitemap.id==i.id , sitemap.id==j.id)).all()
+                for k in exam:
+                    result.append({'title' : k.title, 'id' : k.id})
 
-    for i in search_txt1_db : #9
-        for j in search_txt2_db :#5
-            exam =db.session.query(sitemap).filter(and_(sitemap.id==i.id , sitemap.id==j.id)).all()
-            for k in exam:
-                c.append({'title' : k.title, 'id' : k.id})
-
-    json_list = json.dumps(c,ensure_ascii=False)
-
-    return json_list
+    search_result = json.dumps(result,ensure_ascii=False)
+    return search_result
 
 @app.route("/insert",methods=['POST'])
 def insertUser():
@@ -81,19 +82,16 @@ def insertUser():
 @app.route('/click',methods=['GET','POST'])
 def click():
     value = request.form['pid']
-    # value = 19
     li = db.session.query(sitemap).filter_by(pid=value).order_by(sitemap.sortseq).all()
     a=[]
     for i in li :
         a.append({'title' : i.title, 'id' : i.id})
-    
     json_list = json.dumps(a,ensure_ascii=False) #한글 깨짐 방지
     return json_list
 
 @app.route('/urlclick',methods=['GET','POST'])
 def urlclick():
     uid = request.form['urlid']
-    # uid = 1
     url = db.session.query(sitemap).filter_by(id = uid).one()
     a={'url' : url.url}
     json_url = json.dumps(a)
@@ -102,12 +100,11 @@ def urlclick():
 @app.route('/desclick',methods=['GET','POST'])
 def desclick():
     desid = request.form['desid']
-    # desid = 1
     des = db.session.query(sitemap).filter_by(id = desid).one()
     a={'title' : des.title , 'describe' : des.describe}
     json_des = json.dumps(a,ensure_ascii=False)
     return json_des
-    
+
 @app.route('/update', methods=['GET','POST'])
 def update():
     if request.method == 'POST':
