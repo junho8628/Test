@@ -38,23 +38,28 @@ def admin():
 
 @app.route("/search",methods=['POST','GET'])
 def search():
-    # searchtxt = request.form['search_text']
-    searchtxt = '메인 화면'
-    list_txt = searchtxt.split()
-    for num in range(len(list_txt)) :
-        globals()['search_txt{}'.format(num)] = searchtxt.split()[num]
-        globals()['search_txt_db{}'.format(num)] = db.session.query(sitemap).filter(sitemap.title.contains(globals()['search_txt{}'.format(num)])).all()
+    searchtxt = request.form['search_text']
+    # searchtxt = '메인 화면'
+    list_txt=searchtxt.split()
     result=[]
+    if len(list_txt) == 1 :
+        search_db = db.session.query(sitemap).filter(sitemap.title.contains(searchtxt)).all()
+        for i in search_db :
+            result.append({'title' : i.title, 'id' : i.id})
 
-    for i in search_txt_db0 :
-        for j in search_txt_db1 :
-            exam =db.session.query(sitemap).filter(and_(sitemap.id==i.id , sitemap.id==j.id)).all()
-            for k in exam:
-                result.append({'title' : k.title, 'id' : k.id})
+    elif len(list_txt) > 1 :
+        for num in range(len(list_txt)) :
+            globals()['search_txt{}'.format(num)] = searchtxt.split()[num]
+            globals()['search_txt_db{}'.format(num)] = db.session.query(sitemap).filter(sitemap.title.contains(globals()['search_txt{}'.format(num)])).all()
+        
+        for i in search_txt_db0 :
+            for j in search_txt_db1 :
+                exam =db.session.query(sitemap).filter(and_(sitemap.id==i.id , sitemap.id==j.id)).all()
+                for k in exam:
+                    result.append({'title' : k.title, 'id' : k.id})
 
-    json_list = json.dumps(result,ensure_ascii=False)
-
-    return json_list
+    search_result = json.dumps(result,ensure_ascii=False)
+    return search_result
 
 @app.route("/insert",methods=['POST'])
 def insertUser():
@@ -99,7 +104,7 @@ def desclick():
     a={'title' : des.title , 'describe' : des.describe}
     json_des = json.dumps(a,ensure_ascii=False)
     return json_des
-    
+
 @app.route('/update', methods=['GET','POST'])
 def update():
     if request.method == 'POST':

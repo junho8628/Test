@@ -154,26 +154,28 @@
 	이미지 디스크 - 닥스클라우드로 이전
 Office365
 	Outlook, Word, Exel, PowerPoint, OneNote, Publisher, Scheduleupdate
+-------------------------------------------------------------------------------
 
-# and 사용
-from sqlalchemy import and_
-for user in session.query(User).filter(and_(User.name=='user1', User.email=='user1@localhost')):
-	print( user )
+ for num in range(len(list_txt)) : #전 자 메 일
+        globals()['search_txt{}'.format(num)] = searchtxt.split()[num]
+        globals()['search_txt_db{}'.format(num)] = db.session.query(sitemap).filter(sitemap.title.contains(globals()['search_txt{}'.format(num)])).all()
+    result=[]
 
-# filter and
-for user in session.query(User).filter(User.name=='user2').filter(User.email=='user3@localhost'):
-	print( user )
+    for i in search_txt_db0 :
+        for j in search_txt_db1 :
+            exam =db.session.query(sitemap).filter(and_(sitemap.id==i.id , sitemap.id==j.id)).all()
+            for k in exam:
+                result.append({'title' : k.title, 'id' : k.id})
 
-# filter like 
-for user in session.query(User).filter(User.name.like('%3%')):
-	print( user )
+    json_list = json.dumps(result,ensure_ascii=False)
 
-# filter 대소문자 구분없는 like
-for user in session.query(User).filter(User.name.ilike('%USER%')):
-	print( user )
-
-
-
-
-
-
+------------------------------------------------------------------------------
+ 
+    # a=''
+    # for txt in searchtxt :
+    #     a += "sitemap.title=='"+txt+"',"
+    # b=a.rstrip(',')
+    # exam = sitemap.query.filter(and_(b)).all()
+    # for text in exam :
+    #     find.append({'title' : text.title , 'id' : text.id})
+    # search_result = json.dumps(find,ensure_ascii=False) #한글 깨짐 방지
