@@ -282,7 +282,7 @@
 				//검색 함수
 				function search () {
 					var search_text = $('#input_search').val();
-					if (search_text == ''){alert('검색어를 입력해주세요.');}
+					if (search_text == ''){alert('검색어를 입력해주세요.'); location.reload();}
 					else if(search_text != ''){
 						$(document).find('#rounded-list').empty();
 						$.ajax({
