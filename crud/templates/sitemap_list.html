@@ -351,16 +351,14 @@
 	</head>
 	<body>
 		<h1 id="title">Group<span>Ware</span> SiteMap</h1>
-	<div id="search_var"><input id ="input_search" type="text" placeholder="검색어 입력"><button id = "search_btn">검색</button></div>
+		<form name="search_"action="/search"><div id="search_var"><input id ="input_search" type="text" placeholder="검색어 입력"><button id = "search_btn">검색</button></div></form>
 		<ol id="rounded-list">
 			{% for list in sitemap | sort(attribute='sortseq') %}
-			{% if (list.depth) == 1 %}
 			<li value = "{{list.id}}" data-loaded="yes"><a href="">{{list.title}}
 				<input class ="gobtn" type = "button" name = "urlbtn" value ="이동">
 				<input class ="openbtn" type = "button" name = "describebtn" value ="설명"></a>
 				<ol class ='submenu' id = "onedepth_{{list.id}}"></ol>
 			</li>
-			{% endif %}
 			{% endfor %}
 		</ol>
 		<!-- 팝업창시작 -->

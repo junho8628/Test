@@ -28,7 +28,7 @@ class sitemap(db.Model):
 
 @app.route("/")
 def index():
-    all_data = sitemap.query.order_by(sitemap.id.desc()).all() # selelct * from sitmemap
+    all_data = sitemap.query.filter(sitemap.depth==1).order_by(sitemap.id.desc()).all()
     return render_template("sitemap_list.html",sitemap = all_data)
 
 @app.route("/admin")
@@ -60,6 +60,7 @@ def search():
 
     search_result = json.dumps(result,ensure_ascii=False)
     return search_result
+    # return render_template("sitemap_list.html",sitemap = ???)
 
 @app.route("/insert",methods=['POST'])
 def insertUser():
