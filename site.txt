@@ -179,3 +179,36 @@ Office365
     # for text in exam :
     #     find.append({'title' : text.title , 'id' : text.id})
     # search_result = json.dumps(find,ensure_ascii=False) #한글 깨짐 방지
+--------------------------------------------------------------------------------
+//검색 함수
+	// function search () {
+	// 	var search_text = $('#input_search').val();
+	// 	if (search_text == ''){alert('검색어를 입력해주세요.');location.reload();}
+	// 	else if(search_text != ''){
+	// 		$(document).find('#rounded-list').empty();
+	// 		$.ajax({
+	// 			type:'POST',
+	// 			url:'http://127.0.0.1:5000/search',
+	// 			data : 
+	// 				{'search_text' : search_text} ,
+	// 			dataType:'JSON',
+	// 			success:function(result){
+	// 				// alert(result);
+	// 				var search_obj = JSON.parse(JSON.stringify(result))
+	// 				for (i=0; i<Object.keys(search_obj).length; i++) {
+	// 					var search_li = document.createElement('li');
+	// 					search_li.setAttribute('value',search_obj[i].id);
+	// 					search_li.innerHTML = "<a href=''>"+ search_obj[i].title +
+	// 					"<input class ='gobtn' type = 'button' name = 'urlbtn' value ='이동'><input class ='openbtn' type = 'button' name = 'describebtn' value ='설명'></a>";
+	// 					document.getElementById('rounded-list').appendChild(search_li);
+	// 				}
+	// 			}
+	// 		});
+	// 	}
+	// }
+----------------------------------------------------------------------------------
+//검색
+	// $(document).on('click','#search_btn',function(){search();})
+	// $("#input_search").keydown(function(e){
+	// if(e.keyCode==13){$("#search_btn").click();}
+	// });
