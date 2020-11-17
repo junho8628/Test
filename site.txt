@@ -176,9 +176,7 @@ Office365
     #     a += "sitemap.title=='"+txt+"',"
     # b=a.rstrip(',')
     # exam = sitemap.query.filter(and_(b)).all()
-    # for text in exam :
-    #     find.append({'title' : text.title , 'id' : text.id})
-    # search_result = json.dumps(find,ensure_ascii=False) #한글 깨짐 방지
+
 --------------------------------------------------------------------------------
 //검색 함수
 	// function search () {
@@ -212,3 +210,17 @@ Office365
 	// $("#input_search").keydown(function(e){
 	// if(e.keyCode==13){$("#search_btn").click();}
 	// });
+-----------------------------------------------------------------------------------
+# elif len(list_txt) > 1 :
+    #     for num in range(len(list_txt)) :
+    #         globals()['search_txt{}'.format(num)] = searchtxt.split()[num]
+    #         globals()['search_txt_db{}'.format(num)] = db.session.query(sitemap).filter(sitemap.title.contains(globals()['search_txt{}'.format(num)])).all()
+        
+    #     for i in search_txt_db0 :
+    #         for j in search_txt_db1 :
+    #             exam =db.session.query(sitemap).filter(and_(sitemap.id==i.id , sitemap.id==j.id)).all()
+    #             for k in exam:
+    #                 result.append({'title' : k.title, 'id' : k.id})
+
+    # search_result = json.dumps(result,ensure_ascii=False)
+    # return search_result
