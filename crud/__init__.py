@@ -40,7 +40,6 @@ def search():
     searchtxt = request.form['txtsearch']
     # searchtxt = '메인 화면'
     list_txt=searchtxt.split()
-    
     if searchtxt=='':
         search_db = sitemap.query.filter(sitemap.depth==1).order_by(sitemap.id.desc()).all()
     elif len(list_txt) == 1:
