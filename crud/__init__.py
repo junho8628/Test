@@ -28,38 +28,31 @@ class sitemap(db.Model):
 
 @app.route("/")
 def index():
-    all_data = sitemap.query.order_by(sitemap.id.desc()).all() # selelct * from sitmemap
+    all_data = sitemap.query.filter(sitemap.depth==1).order_by(sitemap.id.desc()).all()
     return render_template("sitemap_list.html",sitemap = all_data)
 
 @app.route("/admin")
 def admin():
     all_data = sitemap.query.order_by(sitemap.id.desc()).all() # selelct * from sitmemap
     return render_template("admin.html",sitemap = all_data)
-
 @app.route("/search",methods=['POST','GET'])
 def search():
     searchtxt = request.form['txtsearch']
     # searchtxt = '메인 화면'
     list_txt=searchtxt.split()
-    result=[]
-    if len(list_txt) == 1 :
-        search_db = db.session.query(sitemap).filter(sitemap.title.contains(searchtxt)).all()
-        for i in search_db :
-            result.append({'title' : i.title, 'id' : i.id})
+    
+    if searchtxt=='':
+        search_db = sitemap.query.filter(sitemap.depth==1).order_by(sitemap.id.desc()).all()
+    elif len(list_txt) == 1:
+        search_db = sitemap.query.filter(sitemap.title.contains(searchtxt)).order_by(sitemap.id.desc()).all()
+    elif len(list_txt) > 1:
+        search_db = sitemap.query.filter(and_(sitemap.title.contains(list_txt[0]),sitemap.title.contains(list_txt[1]))).all()
 
-    elif len(list_txt) > 1 :
-        for num in range(len(list_txt)) :
-            globals()['search_txt{}'.format(num)] = searchtxt.split()[num]
-            globals()['search_txt_db{}'.format(num)] = db.session.query(sitemap).filter(sitemap.title.contains(globals()['search_txt{}'.format(num)])).all()
-        
-        for i in search_txt_db0 :
-            for j in search_txt_db1 :
-                exam =db.session.query(sitemap).filter(and_(sitemap.id==i.id , sitemap.id==j.id)).all()
-                for k in exam:
-                    result.append({'title' : k.title, 'id' : k.id})
+    # for i in search_db :
+    #     a=sitemap.query.filter(sitemap.id==i.pid).all()
 
-    search_result = json.dumps(result,ensure_ascii=False)
-    return search_result
+
+    return render_template("sitemap_list.html",sitemap = search_db)
 
 @app.route("/insert",methods=['POST'])
 def insertUser():
