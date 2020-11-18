@@ -9,10 +9,12 @@
 	</head>
 	<body>
 		<h1 id="title">Group<span>Ware</span> SiteMap</h1>
-		<form name="search" action="" method="POST">
+		<button id = "bbb">asdf</button>
+		<form name="frmSearch" action="" method="POST">
 			<div id="search_var">
-				<input id ="input_search" name="txtsearch" type="text" placeholder="검색어 입력">
+				<input id ="input_search" name="txtsearch" type="search" placeholder="검색어 입력" value="">
 				<button id = "search_btn" onclick="action='/search'">검색</button>
+				<i class="fa fa-search" style="cursor:pointer" onclick="frmSearch.submit();"></i>
 			</div>
 		</form>
 		<ol id="rounded-list">

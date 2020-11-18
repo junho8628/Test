@@ -111,15 +111,27 @@ $(document).ready(function(){
             return false;
         });
     }
-    document.onkeydown=function(){
-
-        if(event.keyCode==116){
-            event.keyCode=505;
-        }
-        if(event.keyCode==505){
-            document.location.href="http://127.0.0.1:5000/";
-            return false;
-        }
+    window.onload = function(){
+        var frm = document.frmSearch;
+            frm.txtsearch.select();
+            frm.txtsearch.focus();
     }
+    $('#bbb').click(function(){
+        alert('a');
+    })
+    // function inputval(){
+    //     document.getElementById("input_search").setAttribute("value",document.getElementById("input_search").value);
+    //     document.getElementById("search_var").innerHTML += "<input id='' name='' type='text'  />";
+    // }
+    // document.onkeydown=function(){
 
-});
+    //     if(event.keyCode==116){
+    //         event.keyCode=505;
+    //     }
+    //     if(event.keyCode==505){
+    //         document.location.href="http://127.0.0.1:5000/";
+    //         return false;
+    //     }
+    // }
+
+}); 
