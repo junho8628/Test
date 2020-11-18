@@ -24,6 +24,9 @@
 							<input class ="openbtn" type = "button" name = "describebtn" value ="설명"></a>
 							<ol class ='submenu' id = "onedepth_{{list.id}}"></ol>
 						</li>
+						{%if loop.index == 1%}
+							{%break%}
+						{%endif%}
 					{% endfor %}
 				{% endfor %}
 			{% else %}

@@ -7,6 +7,10 @@ app = Flask(__name__)
 app.secret_key = "Secret Key"
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///sitemap.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+
+# Jinja2 environment add extension
+app.jinja_env.add_extension('jinja2.ext.loopcontrols')
+
 db = SQLAlchemy(app)
 
 class sitemap(db.Model):
