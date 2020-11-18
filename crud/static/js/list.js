@@ -102,7 +102,7 @@ $(document).ready(function(){
                 $("#modal").removeAttr("class").addClass("one");
                 dele();
             }
-        })
+        });
     }
      // 팝업창 닫기
     function dele(){
