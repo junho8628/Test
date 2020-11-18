@@ -15,7 +15,6 @@
 				<button id = "search_btn" onclick="action='/search'">검색</button>
 			</div>
 		</form>
-		
 		<ol id="rounded-list">
 			{% if upgrade_sitemap is defined %}
 				{% for number in upgrade_sitemap | sort(attribute='sortseq') %}
