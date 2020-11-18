@@ -7,6 +7,10 @@ app = Flask(__name__)
 app.secret_key = "Secret Key"
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///sitemap.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+
+# Jinja2 environment add extension
+app.jinja_env.add_extension('jinja2.ext.loopcontrols')
+
 db = SQLAlchemy(app)
 
 class sitemap(db.Model):
@@ -38,20 +42,24 @@ def admin():
 @app.route("/search",methods=['POST','GET'])
 def search():
     searchtxt = request.form['txtsearch']
-    # searchtxt = '메인 화면'
+    # searchtxt = '메인화면'
     list_txt=searchtxt.split()
+    id_number=[]
     if searchtxt=='':
         search_db = sitemap.query.filter(sitemap.depth==1).order_by(sitemap.id.desc()).all()
+        return render_template("sitemap_list.html",sitemap = search_db)
     elif len(list_txt) == 1:
         search_db = sitemap.query.filter(sitemap.title.contains(searchtxt)).order_by(sitemap.id.desc()).all()
+        for number in search_db :
+            id_number.append(number.pid)
+        search_up_db =sitemap.query.filter(sitemap.id.in_(id_number))
+        return render_template("sitemap_list.html",sitemap = search_db,upgrade_sitemap=search_up_db)
     elif len(list_txt) > 1:
         search_db = sitemap.query.filter(and_(sitemap.title.contains(list_txt[0]),sitemap.title.contains(list_txt[1]))).all()
-
-    # for i in search_db :
-    #     a=sitemap.query.filter(sitemap.id==i.pid).all()
-
-
-    return render_template("sitemap_list.html",sitemap = search_db)
+        for number in search_db :
+            id_number.append(number.pid)
+        search_up_db =sitemap.query.filter(sitemap.id.in_(id_number))
+        return render_template("sitemap_list.html",sitemap = search_db,upgrade_sitemap=search_up_db)
 
 @app.route("/insert",methods=['POST'])
 def insertUser():
