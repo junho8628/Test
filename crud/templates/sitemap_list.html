@@ -5,10 +5,11 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" type="text/css" href="../static/css/list_style.css">
 		<script src="../static/js/jquery-3.5.1.min.js"></script>
-		<script src="../static/js/list.js"></script>
+		<script type = "text/javascript" src="../static/js/list.js"></script>
 	</head>
 	<body>
 		<h1 id="title">Group<span>Ware</span> SiteMap</h1>
+		<button class="a">a</button>
 		<form name="search" action="" method="POST">
 			<div id="search_var">
 				<input id ="input_search" name="txtsearch" type="text" placeholder="검색어 입력">
@@ -16,28 +17,13 @@
 			</div>
 		</form>
 		<ol id="rounded-list">
-			{% if upgrade_sitemap is defined %}
-				{% for number in upgrade_sitemap | sort(attribute='sortseq') %}
-					{% for list in sitemap | sort(attribute='sortseq') %}
-						<li value = "{{list.id}}" data-loaded="yes"><a href="">{{number.title}}>{{list.title}}
-							<input class ="gobtn" type = "button" name = "urlbtn" value ="이동">
-							<input class ="openbtn" type = "button" name = "describebtn" value ="설명"></a>
-							<ol class ='submenu' id = "onedepth_{{list.id}}"></ol>
-						</li>
-						{%if loop.index == 1%}
-							{%break%}
-						{%endif%}
-					{% endfor %}
-				{% endfor %}
-			{% else %}
-				{% for list in sitemap | sort(attribute='sortseq') %}
-					<li value = "{{list.id}}" data-loaded="yes"><a href="">{{list.title}}
-						<input class ="gobtn" type = "button" name = "urlbtn" value ="이동">
-						<input class ="openbtn" type = "button" name = "describebtn" value ="설명"></a>
-						<ol class ='submenu' id = "onedepth_{{list.id}}"></ol>
-					</li>
-				{% endfor %}
-			{% endif %}
+			{% for list in sitemap | sort(attribute='sortseq') %}
+				<li value = "{{list.id}}" data-loaded="yes"><a href="">{{list.title}}
+					<input class ="gobtn" type = "button" name = "urlbtn" value ="이동">
+					<input class ="openbtn" type = "button" name = "describebtn" value ="설명"></a>
+					<ol class ='submenu' id = "onedepth_{{list.id}}"></ol>
+				</li>
+			{% endfor %} 
 		</ol>
 		<!-- 팝업창시작 -->
 		<div id="modal">

@@ -70,6 +70,11 @@ $(document).ready(function(){
         open(desid);
         return false;
     });
+    //이벤트 막기
+    $('.a').click(function(){
+        alert("aaa");
+        // $(document).off('click','#rounded-list>li');
+    })
     //url 함수
     function go_url(urlid){
         $.ajax({
@@ -111,12 +116,12 @@ $(document).ready(function(){
             return false;
         });
     }
-    document.onkeydown = function(e){
-        var kcode = e.keyCode;
-        if(kcode == 13) {
-            window.history.back();
-        }
-    }
+    
+    // $(document).keydown = function(e){
+    //     if(e.keyCode== 116){
+
+    //     }
+    //    }
     
     
 });

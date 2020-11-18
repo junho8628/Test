@@ -224,3 +224,26 @@ Office365
 
     # search_result = json.dumps(result,ensure_ascii=False)
     # return search_result
+-------------------------------------------------------------------------------------
+{% if upgrade_sitemap is defined %}
+	{% for number in upgrade_sitemap | sort(attribute='sortseq') %}
+		{% for list in sitemap | sort(attribute='sortseq') %}
+			<li value = "{{list.id}}" data-loaded="yes"><a href="">{{number.title}}>{{list.title}}
+				<input class ="gobtn" type = "button" name = "urlbtn" value ="이동">
+				<input class ="openbtn" type = "button" name = "describebtn" value ="설명"></a>
+				<ol class ='submenu' id = "onedepth_{{list.id}}"></ol>
+			</li>
+			{%if loop.index == 1%}
+				{%break%}
+			{%endif%}
+		{% endfor %}
+	{% endfor %}
+{% else %}
+	{% for list in sitemap | sort(attribute='sortseq') %}
+		<li value = "{{list.id}}" data-loaded="yes"><a href="">{{list.title}}
+			<input class ="gobtn" type = "button" name = "urlbtn" value ="이동">
+			<input class ="openbtn" type = "button" name = "describebtn" value ="설명"></a>
+			<ol class ='submenu' id = "onedepth_{{list.id}}"></ol>
+		</li>
+	{% endfor %}
+{% endif %}
