@@ -102,7 +102,7 @@ $(document).ready(function(){
                 $("#modal").removeAttr("class").addClass("one");
                 dele();
             }
-        })
+        });
     }
      // 팝업창 닫기
     function dele(){
@@ -111,4 +111,15 @@ $(document).ready(function(){
             return false;
         });
     }
+    document.onkeydown=function(){
+
+        if(event.keyCode==116){
+            event.keyCode=505;
+        }
+        if(event.keyCode==505){
+            document.location.href="http://127.0.0.1:5000/";
+            return false;
+        }
+    }
+
 });
