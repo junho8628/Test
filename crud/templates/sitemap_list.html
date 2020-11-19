@@ -9,8 +9,13 @@
 			$(document).ready(function(){
 				//2depth 출력
 				$(document).on('click','#rounded-list>li',function(){ 
+					now_url = window.location.href
 					var oneval = $(this).val();
-					if($(this).attr("data-loaded")=='yes') {
+					if(now_url == 'http://127.0.0.1:5000/search') {
+						$(this).off();
+						// return false;
+					}
+					else if($(this).attr("data-loaded")=='yes') {
 						$.ajax({
 							type:'POST',
 							url:'http://127.0.0.1:5000/click',
@@ -78,11 +83,6 @@
 					open(desid);
 					return false;
 				});
-				//이벤트 막기
-				$('.a').click(function(){
-					alert("aaa");
-					// $(document).off('click','#rounded-list>li');
-				})
 				//url 함수
 				function go_url(urlid){
 					$.ajax({
@@ -124,20 +124,11 @@
 						return false;
 					});
 				}
-				
-				// $(document).keydown = function(e){
-				//     if(e.keyCode== 116){
-
-				//     }
-				//    }
-				
-				
 			});
 		</script>
 	</head>
 	<body>
 		<h1 id="title">Group<span>Ware</span> SiteMap</h1>
-		<button class="a">a</button>
 		<form name="search" action="" method="POST">
 			<div id="search_var">
 				<input id ="input_search" name="txtsearch" type="text" placeholder="검색어 입력">
