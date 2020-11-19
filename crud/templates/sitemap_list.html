@@ -124,6 +124,7 @@
 						return false;
 					});
 				}
+				//새로고침
 				$(document).keydown(function(e){
 					if(e.keyCode==116){
 						document.location.href="http://127.0.0.1:5000/";
@@ -135,10 +136,10 @@
 	</head>
 	<body>
 		<h1 id="title">Group<span>Ware</span> SiteMap</h1>
-		<form name="search" action="" method="POST">
+		<form name="search" action="/search" method="POST">
 			<div id="search_var">
 				<input id ="input_search" name="txtsearch" type="text" placeholder="검색어 입력">
-				<button id = "search_btn" onclick="action='/search'">검색</button>
+				<input id = "search_btn" type="submit" value = "검색">
 			</div>
 		</form>
 		<ol id="rounded-list">
