@@ -131,6 +131,17 @@
 						return false;
 					}
 				});
+				window.a=function() {
+					localStorage.in_txt = $('#input_search').val();
+				}
+				function set_val(){
+					var now_url = window.location.href;
+					if(now_url == 'http://127.0.0.1:5000/search'){
+						$('#input_search').val(localStorage.in_txt);
+					}
+					
+				}
+				window.onload=set_val();
 			});
 		</script>
 	</head>
@@ -138,8 +149,8 @@
 		<h1 id="title">Group<span>Ware</span> SiteMap</h1>
 		<form name="search" action="/search" method="POST">
 			<div id="search_var">
-				<input id ="input_search" name="txtsearch" type="text" placeholder="검색어 입력">
-				<input id = "search_btn" type="submit" value = "검색">
+				<input id ="input_search" name="txtsearch" type="text" placeholder="검색어 입력" >
+				<input id = "search_btn" type="submit" onclick = 'a()' value = "검색">
 			</div>
 		</form>
 		<ol id="rounded-list">
