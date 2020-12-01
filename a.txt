@@ -1,0 +1,78 @@
+<div class="contact-content-body">
+            {% for list in sitemap | sort(attribute='sortseq') %}
+          <div id="2deps-tab" class="tab-content">
+            <!-- <div id="contactInformation" class="tab-pane show active pd-20 pd-xl-25">
+            </div>
+            <div id="contactLogs" class="tab-pane pd-20 pd-xl-25">
+              <div class="d-flex align-items-center justify-content-between mg-b-30">
+                <h6 class="tx-15 mg-b-0">Call &amp; Message Logs</h6>
+                <a href="#" class="btn btn-sm btn-white d-flex align-items-center"><i class="icon ion-md-time mg-r-5 tx-16 lh--9"></i> Clear History</a>
+              </div>
+            </div> -->
+          </div><!-- tab-content -->
+            {% endfor %}
+
+        </div><!-- contact-content-body -->
+
+$('.contact-list .media').on('click', function(e) {
+    $('.contact-content-body #2deps-tab').empty();
+    e.preventDefault();
+    var oneval = $(this).find('li').val();
+    if($(this).find('li').attr("data-loaded")=='yes') {
+    $.ajax({
+      			type:'POST',
+      			url:'http://127.0.0.1:5000/click',
+      			data : 
+      				{'pid' : oneval} ,
+      			dataType:'JSON',
+      			success:function(result){
+      				var obj = JSON.parse(JSON.stringify(result))
+      				for (var i=0; i<Object.keys(obj).length; i++) {
+      					var list_two = document.createElement('li');
+      					list_two.setAttribute('value',obj[i].id);
+      					list_two.setAttribute('data-loaded','yes');
+      					list_two.innerHTML = "<a href=''>"+ obj[i].title +
+      					"</a>"+
+      					"<ol class = 'submenu2' id = "+obj[i].id+"> </ol>";
+      					document.getElementById('2deps-tab').appendChild(list_two);
+      				}
+      			}
+          });
+          $(this).find('li').attr("data-loaded","no");
+        }
+        else if($(this).find('li').attr("data-loaded")=='no'){
+          $('.contact-content-body #2deps-tab').empty();
+          $(this).find('li').attr("data-loaded","yes");
+        }
+
+    $('.contact-list .media').removeClass('active');
+    $(this).addClass('active');
+
+    var cName = $(this).find('h6').text();
+    $('#contactName').text(cName);
+
+    var aName=$(this).find('span').text();
+    $('#contactId').text(aName);
+
+    var cAvatar = $(this).find('.avatar').clone();
+
+    cAvatar.removeClass (function (index, className) {
+      return (className.match (/(^|\s)avatar-\S+/g) || []).join(' ');
+    });
+    cAvatar.addClass('avatar-xl');
+
+    $('#contactAvatar .avatar').replaceWith(cAvatar);
+
+
+
+
+    // showing contact information when clicking one of the list
+    // for mobile interaction only
+    if(window.matchMedia('(max-width: 991px)').matches) {
+      $('body').addClass('contact-content-show');
+      $('body').removeClass('contact-content-visible');
+
+      $('#mainMenuOpen').addClass('d-none');
+      $('#contactContentHide').removeClass('d-none');
+    }
+  })
