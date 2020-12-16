@@ -1,0 +1,71 @@
+@app.route("/favorite",methods=['POST','GET'])
+def favorites():
+    
+    # ftitle='메인화면'
+    ftitle=request.form['titlename']
+    fdes=request.form['desname']
+    fid=request.form['titleid']
+    
+    # item=favorite.query.filter(favorite.id==fid).all()
+    inputFa=favorite(id=fid,title=ftitle, describe=fdes)
+    db.session.add(inputFa)
+    db.session.commit()
+
+$(document).on('click','#navstar',function(e){
+      var titlename=$(this).parent().find('li').text();
+      var titleid=$(this).parent().find('li').val();
+      var desname=$(this).parent().find('span').text();
+      
+      e.preventDefault();
+      if($(this).attr('data-loaded')=="yes"){
+        $(this).addClass('active');
+        $.ajax({
+          type:'POST',
+          url:'http://127.0.0.1:5000/favorite',
+          data : 
+            {'titlename' : titlename, 'desname':desname, 'titleid':titleid},
+          dataType:'JSON'
+        })
+        $(this).attr("data-loaded","no");
+      }
+      else if($(this).attr("data-loaded")=='no'){
+        $(this).removeClass('active');
+        $(this).attr("data-loaded","yes");
+      }
+
+    })
+-------------------------------------------------------------------------
+@app.route("/favoritedb",methods=['POST','GET'])
+def favoritesdb():
+
+    fav_db=[]
+    li = favorite.query.all()
+    for i in li:
+        fav_db.append({'id' : i.id, 'title' : i.title,'describe':i.describe})
+
+    fav_list = json.dumps(fav_db,ensure_ascii=False)
+    return fav_list
+
+$(document).on('click','#tabFavoritesid',function(e){
+      $('#faver').empty();
+
+      $.ajax({
+        type:'POST',
+        url:'http://127.0.0.1:5000/favoritedb',
+        dataType:'JSON',
+        success:function(result){
+          var obj = JSON.parse(JSON.stringify(result))
+          for (i=0; i<Object.keys(obj).length; i++) {
+            var search_list12 = document.createElement('div');
+            search_list12.setAttribute('class','media');
+            search_list12.setAttribute('id','search_depth_list');
+            search_list12.innerHTML = "<div class='media-body mg-l-10'><h6 class='tx-13 mg-b-3'><li value="+obj[i].id+">"+ obj[i].title +"</h6>"+
+            "<span class='tx-12'>"+obj[i].describe+"</span></div>";
+            document.getElementById('faver').appendChild(search_list12);
+          }
+        }
+      })
+
+        
+      })
+
