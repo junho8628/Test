@@ -67,3 +67,5 @@ $('#search_log').on('click',function(){
       })
       $('.nav a[href="#tabContact"]').tab('show');
     })
+
+asd
