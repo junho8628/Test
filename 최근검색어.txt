@@ -1,0 +1,69 @@
+@app.route('/recently',methods=['GET','POST'])
+def recently_Search():
+    search_data = db.session.query(searchLog.stitle).distinct()
+    # .order_by(searchLog.id.desc()).all()
+    query_list=[]
+    for i in search_data :
+        query_list.append({'stitle':i.stitle})
+    json_list = json.dumps(query_list,ensure_ascii=False) #한글 깨짐 방지
+    return json_list
+
+
+item = sitemap.query.filter(searchLog.stitle==searchtxt).first()
+    if searchtxt != '' and item == None :
+        inputDb = searchLog(searchtxt) 
+        db.session.add(inputDb)
+        db.session.commit()
+
+class searchLog(db.Model):
+    __tablename__='searchLog'
+    id = db.Column(db.Integer,primary_key = True,autoincrement=True)
+    stitle = db.Column(db.String(255),nullable=False)
+
+    def __init__(self,stitle):
+        self.stitle=stitle
+
+$('#search_log').on('click',function(){
+      $('#recently_search').empty();
+      $('.nav a[href="#tabSearch"]').tab('show');
+      $.ajax({
+        type:'POST',
+        url:'http://127.0.0.1:5000/recently',
+        success:function(result){
+          var obj = JSON.parse(result);
+          for (i=0; i<Object.keys(obj).length; i++) {
+            var search_list = document.createElement('div');
+            search_list.setAttribute('class','media');
+            search_list.innerHTML="<div class='media-body mg-l-10'><h6 class='tx-13 mg-b-3'><li value=''>"+ obj[i].stitle +"</h6>"+
+            "<span class='tx-12'></span></div>";
+            document.getElementById('recently_search').appendChild(search_list);
+          }
+        }
+      })
+    })
+    $(document).on('click','#recently_search .media',function(){
+      var search_txt=$(this).find('li').text();
+      $('#submit-txt').val(search_txt);
+      $('#one_depth').empty();
+      $.ajax({
+        type:'POST',
+        url:'http://127.0.0.1:5000/search',
+        data : 
+          {'txtsearch' : search_txt} ,
+        dataType:'JSON',
+        success:function(result){
+          var obj = JSON.parse(JSON.stringify(result))
+          for (i=0; i<Object.keys(obj).length; i++) {
+            var search_list = document.createElement('div');
+            search_list.setAttribute('class','media');
+            search_list.setAttribute('id','search_depth_list');
+            search_list.innerHTML = "<div class='media-body mg-l-10'><h6 class='tx-13 mg-b-3'><li value="+obj[i].id+">"+ obj[i].title +"</h6>"+
+            "<span class='tx-12'>"+obj[i].describe+"</span></div><nav><a href=''><svg xmlns='http://www.w3.org/2000/svg' width='24' height='24'"+
+            "viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='feather feather-star'>"+
+            "<polygon points='12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2'></polygon></svg></a></nav>";
+            document.getElementById('one_depth').appendChild(search_list);
+          }
+        }
+      })
+      $('.nav a[href="#tabContact"]').tab('show');
+    })
