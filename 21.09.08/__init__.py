@@ -47,7 +47,7 @@ options=webdriver.ChromeOptions()
 options.add_argument('window-size=1920x1080') 
 options.add_argument("disable-gpu")
 options.add_argument("user-data-dir=C:\\environments\\selenium")
-driver = webdriver.Chrome('E:/othertest/driver/chromedriver.exe', options=options) #또는 chromedriver.exe
+driver = webdriver.Chrome('chromedriver.exe', options=options) #또는 chromedriver.exe
 driver.maximize_window()
 actions = webdriver.ActionChains(driver)
 driver.implicitly_wait(15) # 묵시적 대기, 활성화를 최대 15초가지 기다린다.
