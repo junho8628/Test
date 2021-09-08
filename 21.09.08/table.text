@@ -1,0 +1,5 @@
+.\sqlite3 craw.db
+
+create table webtoon(
+   id integer primary key, 
+   title text);
